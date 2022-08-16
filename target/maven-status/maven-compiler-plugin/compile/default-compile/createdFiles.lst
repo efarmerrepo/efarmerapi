@@ -1,3 +1,7 @@
-com/efarmer/entity/Farmer.class
 com/efarmer/EfarmerapiApplication.class
+com/efarmer/repository/UserRepository.class
+com/efarmer/entity/User.class
+com/efarmer/service/UserService.class
+com/efarmer/service/UserServiceImpl.class
 com/efarmer/controller/EfarmerController.class
+com/efarmer/repository/UserRepositoryImpl.class
