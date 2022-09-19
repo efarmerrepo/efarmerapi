@@ -16,6 +16,8 @@ import org.springframework.web.reactive.result.method.annotation.ResponseEntityR
 
 import com.efarmer.api.efarmer.entity.Category;
 import com.efarmer.api.efarmer.entity.UserEntity;
+import com.efarmer.api.efarmer.model.Categories;
+import com.efarmer.api.efarmer.model.Categories.CategoriesBuilder;
 import com.efarmer.api.efarmer.service.CategoryService;
 import com.efarmer.api.efarmer.service.UserService;
 
@@ -52,10 +54,11 @@ public class UserController {
 	}
 	
 	@GetMapping(value = "/category")
-	public ResponseEntity<Category>  getCategory(){
+	public ResponseEntity<Categories>  getCategory(){
 		
-		List<Category> categories = categoryService.findAll();
-		return new ResponseEntityResultHandler(categories, HttpStatus.OK);
+		List<Category> categoriesList = categoryService.findAll();
+		 Categories categories = Categories.builder().categories(categoriesList).build();
+		return new ResponseEntity<Categories>(categories,HttpStatus.OK);
 		
 		
 	}
