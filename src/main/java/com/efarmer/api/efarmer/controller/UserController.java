@@ -1,5 +1,6 @@
 package com.efarmer.api.efarmer.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.result.method.annotation.ResponseEntityResultHandler;
 
+import com.efarmer.api.efarmer.entity.Category;
 import com.efarmer.api.efarmer.entity.UserEntity;
+import com.efarmer.api.efarmer.service.CategoryService;
 import com.efarmer.api.efarmer.service.UserService;
 
 @RequestMapping("/")
@@ -21,6 +25,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private CategoryService categoryService;
 	
 	@GetMapping(value = "/user/{id}")
 	public ResponseEntity<UserEntity> getUserById(@PathVariable("id") Long id ) {
@@ -40,6 +47,15 @@ public class UserController {
 		
 		UserEntity savedEntity = userService.save(userEntity);
 		return new ResponseEntity<UserEntity>(savedEntity , HttpStatus.OK);
+		
+		
+	}
+	
+	@GetMapping(value = "/category")
+	public ResponseEntity<Category>  getCategory(){
+		
+		List<Category> categories = categoryService.findAll();
+		return new ResponseEntityResultHandler(categories, HttpStatus.OK);
 		
 		
 	}
