@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.apnafarmers.entity.Farmer;
-import com.apnafarmers.entity.Media;
 
 public interface FarmerService {
 
@@ -16,6 +15,8 @@ public interface FarmerService {
 
 	Optional<Farmer> findById(long id);
 
-	Media saveMedia(Media media);
+	void deleteAll();
+
+	void deleteById(long id);
 
 }

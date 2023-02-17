@@ -7,9 +7,11 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -115,7 +117,6 @@ public class FarmerController {
 	@PostMapping("/details")
 	public ResponseEntity<Farmer> addFarmer(@RequestBody FarmerDto request) {
 		log.info("{}", request);
-
 		List<MediaDto> mediaModelList = request.getMedia();
 
 		Farmer farmer = new Farmer();
@@ -157,6 +158,68 @@ public class FarmerController {
 		Farmer save = farmerService.saveFarmer(farmer);
 
 		return new ResponseEntity<>(save, HttpStatus.CREATED);
+	}
+
+	@PutMapping("/details/{id}")
+	public ResponseEntity<Farmer> updateTutorial(@PathVariable("id") long id, @RequestBody FarmerDto request) {
+		Farmer farmer = farmerService.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Not found Tutorial with id = " + id));
+
+		List<MediaDto> mediaModelList = request.getMedia();
+
+		farmer.setFirstName(request.getFName());
+		farmer.setLastName(request.getLName());
+		farmer.setLand(request.getLand());
+		farmer.setLandUnit(request.getLandUnit());
+		farmer.setCity(request.getCity());
+		farmer.setDistrict(request.getDistrict());
+		farmer.setPincode(request.getPinCode());
+
+		MediaDto mediaModel = mediaModelList.get(0);
+		Media media = new Media();
+		media.setType(mediaModel.getType());
+		media.setUrl(mediaModel.getUrl());
+		farmer.addMedia(media);
+
+		List<CropDto> cropDtoList = request.getCrops();
+		if (cropDtoList != null) {
+			for (CropDto cropDto : cropDtoList) {
+				Crop crop = new Crop();
+				crop.setId(cropDto.getId());
+				crop.setCropTypeId(cropDto.getCropTypeId());
+				crop.setCropType(cropDto.getCropType());
+				crop.setName(cropDto.getCropName());
+				crop.setRate(cropDto.getRate());
+				crop.setQuantity(cropDto.getQuantity());
+				crop.setQuantityUnit(cropDto.getQuantityUnit());
+				crop.setLand(cropDto.getLand());
+				crop.setLandUnit(crop.getLandUnit());
+				crop.setCity(cropDto.getCity());
+				crop.setDistrict(cropDto.getDistrict());
+				crop.setPinCode(cropDto.getPinCode());
+				farmer.addCrop(crop);
+			}
+		}
+
+		log.info("Saving Farmer {} ", farmer);
+
+		Farmer save = farmerService.saveFarmer(farmer);
+
+		return new ResponseEntity<>(farmerService.saveFarmer(save), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/details/{id}")
+	public ResponseEntity<HttpStatus> deleteTutorial(@PathVariable("id") long id) {
+		farmerService.deleteById(id);
+
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+
+	@DeleteMapping("/details")
+	public ResponseEntity<HttpStatus> deleteAllTutorials() {
+		farmerService.deleteAll();
+
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
 }
