@@ -1,2 +1,2 @@
-# efarmerapi
-this is the backend functionality for efarmer project  widely used for mac and android platform
+For more detail, please visit:
+> [SWAGGER](http://localhost:8080/apnafarmers/v1/swagger-ui/index.html)
