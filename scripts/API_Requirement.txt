@@ -1,0 +1,190 @@
+Login API : POST
+Request : 
+{
+	"mobileNumber":"9876543212"
+}
+
+Response :
+{
+	"message":"OTP sent on 9876543212"
+}
+
+=============================================
+
+Verify OTP : 
+Request : POST
+{
+	"otp":"123456"
+}
+
+{
+	"message":"OTP verified"
+}
+
+=============================================
+
+Country List API : GET
+Query Param : lang = {en/hindi,marathi,gujrati}
+Response
+{
+	"countries":[
+		{
+			"id":1,
+			"name":"India"
+		},
+		{
+			"id":2,
+			"name":"USA"
+		}
+	]
+}
+
+=============================================
+
+State List : GET API
+Qurey Param : countryId, lang = {en/hindi,marathi,gujrati}
+
+
+Response
+{
+	"states":[
+		{
+			"id":1,
+			"name":"Maharshtra"
+		},
+		{
+			"id":2,
+			"name":"Gujrat"
+		}
+	]
+}
+
+=============================================
+
+District List : GET API
+Qurey Param : stateId, lang = {en/hindi,marathi,gujrati}
+
+Response
+{
+	"districts":[
+		{
+			"id":1,
+			"name":"Nagpur"
+		},
+		{
+			"id":2,
+			"name":"Amravati"
+		}
+	]
+}
+
+=============================================
+
+City List : GET API
+Qurey Param : districtId, lang = {en/hindi,marathi,gujrati}
+
+Response
+{
+	"cities":[
+		{
+			"id":1,
+			"name":"Katol"
+		},
+		{
+			"id":2,
+			"name":"Kondali"
+		}
+	]
+}
+
+=============================================
+
+Farmer/Crop List : Post/GET API (Pagination to be implemented)
+Query Params :
+
+Request {
+}
+
+Response
+{
+	"crops":[
+		{
+			"id":1,
+			"fName":"Ashish",
+			"lName":"Mahant",
+			"cropTypeId":1,
+			"cropType":"Fruits",
+			"cropName":"Orange",
+			"rate":"20"
+			"quantity":"10",
+			"quantityUnit":"ton"
+			"land":"20",
+			"landUnit":"Bigha",
+			"city":"Katol",
+			"district":"Nagpur",
+			"pinCode":"444777",
+			"gallary/media":[
+				{
+					"type":"image/video"
+					"url":"https:google.dssds/asas"
+				},
+				{
+					"type":"image/video"
+					"url":"https:google.dssds/asas"
+				}
+			]
+		}
+	]
+}
+
+=============================================
+Farmer Profile/Details : GET
+Query Param : farmerId
+
+Response : 
+{
+	"farmerId":1,
+	"fName":"Ashish",
+	"lName":"Mahant",
+	"land":"20",
+	"landUnit":"Bigha",
+	"city":"Katol",
+	"district":"Nagpur",
+	"pinCode":"444777",
+	"gallary/media":[
+		{
+			"type":"image/video"
+			"url":"https:google.dssds/asas"
+		},
+		{
+			"type":"image/video"
+			"url":"https:google.dssds/asas"
+		}
+	],
+	"crops":[
+		{
+			"id":1,
+			"cropTypeId":1,
+			"cropType":"Fruits",
+			"cropName":"Orange",
+			"rate":"20"
+			"quantity":"10",
+			"quantityUnit":"ton"
+			"land":"20",
+			"landUnit":"Bigha",
+			"city":"Katol",
+			"district":"Nagpur",
+			"pinCode":"444777",
+			"gallary/media":[
+				{
+					"type":"image/video"
+					"url":"https:google.dssds/asas"
+				},
+				{
+					"type":"image/video"
+					"url":"https:google.dssds/asas"
+				}
+			]
+		}
+	]
+}

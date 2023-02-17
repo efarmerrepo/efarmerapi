@@ -1,21 +1,34 @@
-http://localhost:8080/apnafarmers/v1/location/countries
-http://localhost:8080/apnafarmers/v1/location/countries/india
-http://localhost:8080/apnafarmers/v1/location/countries?limit=10
-http://localhost:8080/apnafarmers/v1/location/countries?limit=10&st=A
-http://localhost:8080/apnafarmers/v1/location/countries?limit=10&st=A&sort=desc
+GET - http://localhost:8080/apnafarmers/v1/location/countries
+GET - http://localhost:8080/apnafarmers/v1/location/countries/india
+GET - http://localhost:8080/apnafarmers/v1/location/countries?limit=10
+GET - http://localhost:8080/apnafarmers/v1/location/countries?limit=10&st=A
+GET - http://localhost:8080/apnafarmers/v1/location/countries?limit=10&st=A&sort=desc
 
-http://localhost:8080/apnafarmers/v1/location/states
-http://localhost:8080/apnafarmers/v1/location/states/Andhra
-http://localhost:8080/apnafarmers/v1/location/states?limit=10
-http://localhost:8080/apnafarmers/v1/location/states?limit=10&st=A
-http://localhost:8080/apnafarmers/v1/location/states?limit=10&st=A&sort=desc
+GET - http://localhost:8080/apnafarmers/v1/location/states
+GET - http://localhost:8080/apnafarmers/v1/location/states/Andhra
+GET - http://localhost:8080/apnafarmers/v1/location/states?limit=10
+GET - http://localhost:8080/apnafarmers/v1/location/states?limit=10&st=A
+GET - http://localhost:8080/apnafarmers/v1/location/states?limit=10&st=A&sort=desc
 	
 
-http://localhost:8080/apnafarmers/v1/location/cities
-http://localhost:8080/apnafarmers/v1/location/cities/ah
-http://localhost:8080/apnafarmers/v1/location/cities?limit=10
-http://localhost:8080/apnafarmers/v1/location/cities?limit=10&st=A
-http://localhost:8080/apnafarmers/v1/location/cities?limit=10&st=A&sort=desc
+GET - http://localhost:8080/apnafarmers/v1/location/cities
+GET - http://localhost:8080/apnafarmers/v1/location/cities/ah
+GET - http://localhost:8080/apnafarmers/v1/location/cities?limit=10
+GET - http://localhost:8080/apnafarmers/v1/location/cities?limit=10&st=A
+GET - http://localhost:8080/apnafarmers/v1/location/cities?limit=10&st=A&sort=desc
 
-http://localhost:8080/apnafarmers/v1/farmers/crops
-http://localhost:8080/apnafarmers/v1/farmers/crops/1
+
+--Farmers API
+POST - http://localhost:8080/apnafarmers/v1/farmers/details
+GET - http://localhost:8080/apnafarmers/v1/farmers/details
+GET - http://localhost:8080/apnafarmers/v1/farmers/details/1
+PUT- http://localhost:8080/apnafarmers/v1/farmers/details/1
+DELETE - http://localhost:8080/apnafarmers/v1/farmers/details
+DELETE - http://localhost:8080/apnafarmers/v1/farmers/details/1
+
+
+--CROP
+GET - http://localhost:8080/apnafarmers/v1/farmers/crops
+GET - http://localhost:8080/apnafarmers/v1/farmers/crops/3
+PUT - http://localhost:8080/apnafarmers/v1/farmers/crops/1
+DELETE - http://localhost:8080/apnafarmers/v1/farmers/crops/1
