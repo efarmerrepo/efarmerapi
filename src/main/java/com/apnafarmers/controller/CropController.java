@@ -44,35 +44,21 @@ public class CropController {
 		if (crops.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
-		
-		List<CropDto> cropDtoList = new ArrayList<>(); 
+
+		List<CropDto> cropDtoList = new ArrayList<>();
 		for (Crop crop : crops) {
-			
+
 			Farmer farmer = crop.getFarmer();
-			
-			CropDto response = CropDto.builder()
-			  .id(crop.getId())
-			  .fName(farmer.getFirstName())
-			  .lName(farmer.getLastName())
-			  .cropTypeId(crop.getCropTypeId())
-			  .cropType(crop.getCropType())
-			  .cropName(crop.getName())
-			  .rate(crop.getRate())
-			  .quantity(crop.getQuantity())
-			  .quantityUnit(crop.getQuantityUnit())
-			  .land(crop.getLand())
-			  .landUnit(crop.getLandUnit())
-			  .city(crop.getCity())
-			  .district(crop.getDistrict())
-			  .pinCode(crop.getPinCode())
-			  .media(null)
-			  .build();
-			
-			
+
+			CropDto response = CropDto.builder().id(crop.getId()).fName(farmer.getFirstName())
+					.lName(farmer.getLastName()).cropTypeId(crop.getCropTypeId()).cropType(crop.getCropType())
+					.cropName(crop.getName()).rate(crop.getRate()).quantity(crop.getQuantity())
+					.quantityUnit(crop.getQuantityUnit()).land(crop.getLand()).landUnit(crop.getLandUnit())
+					.city(crop.getCity()).district(crop.getDistrict()).pinCode(crop.getPinCode()).media(null).build();
+
 			cropDtoList.add(response);
 		}
-		
-		
+
 		return new ResponseEntity<>(cropDtoList, HttpStatus.OK);
 	}
 
@@ -82,31 +68,18 @@ public class CropController {
 				.orElseThrow(() -> new ResourceNotFoundException("Not found Crop with id = " + id));
 
 		Farmer farmer = crop.getFarmer();
-		CropDto cropDto = CropDto.builder()
-				  .id(crop.getId())
-				  .fName(farmer.getFirstName())
-				  .lName(farmer.getLastName())
-				  .cropTypeId(crop.getCropTypeId())
-				  .cropType(crop.getCropType())
-				  .cropName(crop.getName())
-				  .rate(crop.getRate())
-				  .quantity(crop.getQuantity())
-				  .quantityUnit(crop.getQuantityUnit())
-				  .land(crop.getLand())
-				  .landUnit(crop.getLandUnit())
-				  .city(crop.getCity())
-				  .district(crop.getDistrict())
-				  .pinCode(crop.getPinCode())
-				  .build();
+		CropDto cropDto = CropDto.builder().id(crop.getId()).fName(farmer.getFirstName()).lName(farmer.getLastName())
+				.cropTypeId(crop.getCropTypeId()).cropType(crop.getCropType()).cropName(crop.getName())
+				.rate(crop.getRate()).quantity(crop.getQuantity()).quantityUnit(crop.getQuantityUnit())
+				.land(crop.getLand()).landUnit(crop.getLandUnit()).city(crop.getCity()).district(crop.getDistrict())
+				.pinCode(crop.getPinCode()).build();
 
-		
 		return new ResponseEntity<>(cropDto, HttpStatus.OK);
 	}
 
-	@PostMapping("/crop")
+	@PostMapping("/crops")
 	public ResponseEntity<Crop> addCrop(@RequestBody CropDto request,
-			@RequestParam(value = "farmerId", required = true) Long farmerId 
-			) {
+			@RequestParam(value = "fid", required = true) Long farmerId) {
 		log.info("{}", request);
 		Crop crop = new Crop();
 		crop.setCropTypeId(request.getCropTypeId());
@@ -120,9 +93,7 @@ public class CropController {
 		crop.setCity(request.getCity());
 		crop.setDistrict(request.getDistrict());
 		crop.setPinCode(request.getPinCode());
-		
-//		crop.setFarmer(farmerId);
-		
+
 		Crop save = cropService.saveFarmer(crop);
 
 		return new ResponseEntity<>(save, HttpStatus.CREATED);
@@ -130,8 +101,7 @@ public class CropController {
 
 	@PutMapping("/crops/{id}")
 	public ResponseEntity<Crop> updateCrop(@RequestBody CropDto request,
-			@PathVariable(value = "id", required = true) long id 
-			)  {
+			@PathVariable(value = "id", required = true) long id) {
 		Crop crop = cropService.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Not found Crop with id = " + id));
 
@@ -146,7 +116,7 @@ public class CropController {
 		crop.setCity(request.getCity());
 		crop.setDistrict(request.getDistrict());
 		crop.setPinCode(request.getPinCode());
-		
+
 		return new ResponseEntity<>(cropService.saveFarmer(crop), HttpStatus.OK);
 	}
 
