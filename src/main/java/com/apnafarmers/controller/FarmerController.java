@@ -140,7 +140,6 @@ public class FarmerController {
 		if (cropDtoList != null) {
 			for (CropDto cropDto : cropDtoList) {
 				Crop crop = new Crop();
-				crop.setId(cropDto.getId());
 				crop.setCropTypeId(cropDto.getCropTypeId());
 				crop.setCropType(cropDto.getCropType());
 				crop.setName(cropDto.getCropName());
@@ -161,7 +160,7 @@ public class FarmerController {
 	}
 
 	@PutMapping("/details/{id}")
-	public ResponseEntity<Farmer> updateTutorial(@PathVariable("id") long id, @RequestBody FarmerDto request) {
+	public ResponseEntity<Farmer> updateFarmer(@PathVariable("id") long id, @RequestBody FarmerDto request) {
 		Farmer farmer = farmerService.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Not found Tutorial with id = " + id));
 
@@ -185,7 +184,6 @@ public class FarmerController {
 		if (cropDtoList != null) {
 			for (CropDto cropDto : cropDtoList) {
 				Crop crop = new Crop();
-				crop.setId(cropDto.getId());
 				crop.setCropTypeId(cropDto.getCropTypeId());
 				crop.setCropType(cropDto.getCropType());
 				crop.setName(cropDto.getCropName());
@@ -209,7 +207,7 @@ public class FarmerController {
 	}
 
 	@DeleteMapping("/details/{id}")
-	public ResponseEntity<HttpStatus> deleteTutorial(@PathVariable("id") long id) {
+	public ResponseEntity<HttpStatus> deleteFarmer(@PathVariable("id") long id) {
 		farmerService.deleteById(id);
 
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);

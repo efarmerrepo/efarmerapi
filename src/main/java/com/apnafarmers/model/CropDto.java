@@ -15,10 +15,14 @@ public class CropDto {
 
 	private Long id;
 
+	private String fName;
+
+	private String lName;
+
 	private Long cropTypeId;
 
 	private String cropType;
-	
+
 	private String cropName;
 
 	private Double rate;
@@ -32,7 +36,7 @@ public class CropDto {
 	private String landUnit;
 
 	private String city;
-	
+
 	private String district;
 
 	private String pinCode;

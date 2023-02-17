@@ -1,7 +1,6 @@
 package com.apnafarmers.service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,21 +16,33 @@ public class CropServiceImpl implements CropService {
 	CropRepository cropRepository;
 
 	@Override
-	public List<Crop> findAllCrops(Map<String, String> querryParam) {
-		return null;
+	public Crop saveFarmer(Crop farmer) {
+		return cropRepository.save(farmer);
 	}
 
 	@Override
-	public Crop findCropById(Long id, Map<String, String> querryParam) {
-		Optional<Crop> cropOpt = cropRepository.findById(id);
+	public List<Crop> findAll() {
+		return cropRepository.findAll();
+	}
 
-		Crop crop = null ;
-		if (cropOpt.isPresent()) {
-			crop = cropOpt.get();
-		}
+	@Override
+	public List<Crop> findByNameStartsWithIgnoreCase(String startWith) {
+		return cropRepository.findByNameStartsWithIgnoreCase(startWith);
+	}
 
-		return crop;
+	@Override
+	public Optional<Crop> findById(long id) {
+		return cropRepository.findById(id);
+	}
 
+	@Override
+	public void deleteAll() {
+		cropRepository.deleteAll();
+	}
+
+	@Override
+	public void deleteById(long id) {
+		cropRepository.deleteById(id);
 	}
 
 }

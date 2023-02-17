@@ -1,15 +1,24 @@
 package com.apnafarmers.service;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 import com.apnafarmers.entity.Crop;
 
 public interface CropService {
 
-	List<Crop> findAllCrops(Map<String, String> querryParam);
+	
+	Crop saveFarmer(Crop farmer);
 
-	Crop findCropById(Long id, Map<String, String> querryParam);
+	List<Crop> findAll();
+
+	List<Crop> findByNameStartsWithIgnoreCase(String startWith);
+
+	Optional<Crop> findById(long id);
+
+	void deleteAll();
+
+	void deleteById(long id);
 
 
 }
