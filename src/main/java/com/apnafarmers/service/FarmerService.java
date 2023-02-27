@@ -3,6 +3,7 @@ package com.apnafarmers.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.apnafarmers.entity.AndroidAppConfig;
 import com.apnafarmers.entity.Farmer;
 
 public interface FarmerService {
@@ -18,5 +19,7 @@ public interface FarmerService {
 	void deleteAll();
 
 	void deleteById(long id);
+
+	AndroidAppConfig getAndroidAppConfig();
 
 }

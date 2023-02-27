@@ -1,4 +1,4 @@
-package com.apnafarmers.model;
+package com.apnafarmers.dto;
 
 import java.util.List;
 
@@ -11,6 +11,6 @@ import lombok.Data;
 @Builder
 public class States {
 
-	private List<State> state;
+	private List<State> states;
 
 }

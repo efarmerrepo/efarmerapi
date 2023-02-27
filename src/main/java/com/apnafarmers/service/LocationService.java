@@ -2,10 +2,10 @@ package com.apnafarmers.service;
 
 import java.util.Map;
 
-import com.apnafarmers.model.Cities;
-import com.apnafarmers.model.Countries;
-import com.apnafarmers.model.Districts;
-import com.apnafarmers.model.States;
+import com.apnafarmers.dto.Cities;
+import com.apnafarmers.dto.Countries;
+import com.apnafarmers.dto.Districts;
+import com.apnafarmers.dto.States;
 
 public interface LocationService {
 
@@ -24,5 +24,9 @@ public interface LocationService {
 	public Cities getCityByName(String name, Map<String, String> querryParam);
 
 	public Cities getAllCities(Map<String, String> querryParam);
+
+	public Districts getAllDistricts(Map<String, String> querryParam);
+
+	public Cities getAllCitiesByDistrict(Map<String, String> querryParam);
 
 }

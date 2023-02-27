@@ -11,25 +11,28 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import com.apnafarmers.dto.Cities;
+import com.apnafarmers.dto.Countries;
+import com.apnafarmers.dto.Districts;
+import com.apnafarmers.dto.States;
 import com.apnafarmers.entity.City;
 import com.apnafarmers.entity.Country;
+import com.apnafarmers.entity.District;
 import com.apnafarmers.entity.State;
 import com.apnafarmers.exception.DataNotFoundException;
-import com.apnafarmers.model.Cities;
-import com.apnafarmers.model.Countries;
-import com.apnafarmers.model.Districts;
-import com.apnafarmers.model.States;
+import com.apnafarmers.exception.ResourceNotFoundException;
 import com.apnafarmers.repository.CityRepository;
 import com.apnafarmers.repository.CountryRepository;
+import com.apnafarmers.repository.DistrictRepository;
 import com.apnafarmers.repository.StateRepository;
 import com.apnafarmers.utils.ApnaFarmersConstants;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
+@Service
 public class LocationServiceImpl implements LocationService {
 
 	@Autowired
@@ -40,6 +43,10 @@ public class LocationServiceImpl implements LocationService {
 
 	@Autowired
 	CityRepository cityRepository;
+	
+	@Autowired
+	DistrictRepository districtRepository;
+	
 
 	@Override
 	public Countries findAllCountries(Map<String, String> querryParam) {
@@ -124,58 +131,27 @@ public class LocationServiceImpl implements LocationService {
 	@Override
 	public States getAllStates(Map<String, String> querryParam) {
 		List<State> states = null;
-
 		String startWith = querryParam.get(ApnaFarmersConstants.STARTWITH);
 		String limit = querryParam.get(ApnaFarmersConstants.LIMIT);
 		String sort = querryParam.get(ApnaFarmersConstants.SORT);
+		String countryId = querryParam.get(ApnaFarmersConstants.COUNTRY_ID);
 
 		log.info("Inside findAllStates Start");
-		if (StringUtils.isNotEmpty(startWith) && StringUtils.isNotEmpty(limit) && StringUtils.isNotEmpty(sort)) {
-			Pageable pageLimit = PageRequest.of(0, Integer.valueOf(limit), Sort.by(Sort.Direction.DESC, "name"));
-			log.info("Inside All");
-			states = stateRepository.findByNameStartsWithIgnoreCaseOrderByName(startWith, pageLimit);
-		} else if (StringUtils.isNotEmpty(startWith) && StringUtils.isNotEmpty(limit)) {
-			log.info("Inside Find States start with {} , Limit {}", startWith, limit);
-			Pageable pageLimit = PageRequest.of(0, Integer.valueOf(limit), Sort.by(Sort.Direction.ASC, "name"));
-			states = stateRepository.findByNameStartsWithIgnoreCaseOrderByName(startWith, pageLimit);
-		} else if (StringUtils.isNotEmpty(startWith) && StringUtils.isNotEmpty(sort)) {
-			log.info("Inside Find States start with {} , sortedBy {}", startWith, sort);
-			states = stateRepository.findAll(Sort.by(Sort.Direction.DESC, "name"));
-		} else if (StringUtils.isNotEmpty(limit) && StringUtils.isNotEmpty(sort)) {
-			log.info("Inside Find States Limited By {} , sortedBy {}", startWith, sort);
-			Pageable pageLimit = PageRequest.of(0, Integer.valueOf(limit), Sort.by(Sort.Direction.DESC, "name"));
-			Page<State> findAll = stateRepository.findAll(pageLimit);
-			states = findAll.getContent();
-		} else if (StringUtils.isNotEmpty(startWith)) {
-			log.info("Inside Find States start with {}", startWith);
-			states = stateRepository.findByNameStartsWithIgnoreCase(startWith);
-		} else if (StringUtils.isNotEmpty(limit)) {
-			log.info("Fetching States Limited by {}", limit);
-			Pageable pageLimit = PageRequest.of(0, Integer.valueOf(limit), Sort.by(Sort.Direction.ASC, "name"));
-			Page<State> findAll = stateRepository.findAll(pageLimit);
-			states = findAll.getContent();
-		} else if (StringUtils.isNotEmpty(sort)) {
-			log.info("Fetching States Sorted by Desc");
-			Pageable pageLimit = Pageable.unpaged();
-			stateRepository.findByNameStartsWithIgnoreCaseOrderByName(startWith, pageLimit);
-		} else {
-			log.info("Fetching States");
-			states = stateRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
-		}
 
-		for (State state : states) {
-			state.setCities(null);
-		}
+		Optional<Country> findById = countryRepository.findById(Long.valueOf(countryId));
+		Country country = findById
+				.orElseThrow(() -> new ResourceNotFoundException("No State Found with countryId = " + countryId));
+
+		states = country.getStates();
 		log.info("Inside findAllStates Ends ");
-
-		return States.builder().state(states).build();
+		return States.builder().states(states).build();
 	}
 
 	@Override
 	public States getStatesByName(String name, Map<String, String> querryParam) {
 		List<State> states = stateRepository.findByNameStartsWithIgnoreCase(name);
 
-		return States.builder().state(states).build();
+		return States.builder().states(states).build();
 	}
 
 	@Override
@@ -233,6 +209,44 @@ public class LocationServiceImpl implements LocationService {
 
 		List<City> cities = cityRepository.findByNameStartsWithIgnoreCase(name);
 		return Cities.builder().cities(cities).build();
+	}
+
+	@Override
+	public Districts getAllDistricts(Map<String, String> querryParam) {
+		log.info("Inside find All Districts Start");
+		
+		List<District> districts = null;
+		String startWith = querryParam.get(ApnaFarmersConstants.STARTWITH);
+		String limit = querryParam.get(ApnaFarmersConstants.LIMIT);
+		String sort = querryParam.get(ApnaFarmersConstants.SORT);
+		String stateId = querryParam.get(ApnaFarmersConstants.STATE_ID);
+
+		Optional<State> findById = stateRepository.findById(Long.valueOf(stateId));
+		State state = findById
+				.orElseThrow(() -> new ResourceNotFoundException("No District Found with stateId = " + stateId));
+
+		districts = state.getDistricts();
+		log.info("Inside findAllStates Ends ");
+		return Districts.builder().districts(districts).build();
+	}
+
+	@Override
+	public Cities getAllCitiesByDistrict(Map<String, String> querryParam) {
+		List<City> cities = null;
+		String startWith = querryParam.get(ApnaFarmersConstants.STARTWITH);
+		String limit = querryParam.get(ApnaFarmersConstants.LIMIT);
+		String sort = querryParam.get(ApnaFarmersConstants.SORT);
+		String districtId = querryParam.get(ApnaFarmersConstants.DISTRICT_ID);
+
+		Optional<District> findById = districtRepository.findById(Long.valueOf(districtId));
+		District district = findById
+				.orElseThrow(() -> new ResourceNotFoundException("No City Found with districtId = " + districtId));
+
+		cities = district.getCities();
+		log.info("Inside findAllStates Ends ");
+		return Cities.builder().cities(cities).build();
+		
+		
 	}
 
 }

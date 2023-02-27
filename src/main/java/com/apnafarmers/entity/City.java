@@ -42,5 +42,11 @@ public class City {
 	@JoinColumn(name = "state_name", referencedColumnName = "name", nullable = false)
 	@JsonIgnore
 	private State state;
+	
+	
+	@ManyToOne
+	@JoinColumn(name = "districtName", referencedColumnName = "name", nullable = false)
+	@JsonIgnore
+	private District district;
 
 }

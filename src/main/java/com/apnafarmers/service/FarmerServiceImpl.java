@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import com.apnafarmers.entity.AndroidAppConfig;
 import com.apnafarmers.entity.Farmer;
 import com.apnafarmers.repository.FarmerRepository;
 
-@Component
+@Service
 public class FarmerServiceImpl implements FarmerService {
 
 	@Autowired
@@ -46,6 +47,11 @@ public class FarmerServiceImpl implements FarmerService {
 	@Override
 	public void deleteById(long id) {
 		farmerRepository.deleteById(id);
+	}
+
+	@Override
+	public AndroidAppConfig getAndroidAppConfig() {
+		return null;
 	}
 
 }

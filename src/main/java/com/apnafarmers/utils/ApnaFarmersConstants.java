@@ -8,4 +8,5 @@ public class ApnaFarmersConstants {
 	public static String LIMIT = "limit";
 	public static String COUNTRY_ID = "countryId";
 	public static String STATE_ID = "stateId";
+	public static String DISTRICT_ID = "districtId";
 }

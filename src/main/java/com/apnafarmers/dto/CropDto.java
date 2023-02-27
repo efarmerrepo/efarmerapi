@@ -1,4 +1,4 @@
-package com.apnafarmers.model;
+package com.apnafarmers.dto;
 
 import java.util.List;
 
@@ -14,10 +14,6 @@ import lombok.ToString;
 public class CropDto {
 
 	private Long id;
-
-	private String fName;
-
-	private String lName;
 
 	private Long cropTypeId;
 

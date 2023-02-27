@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.apnafarmers.dto.Cities;
+import com.apnafarmers.dto.Countries;
+import com.apnafarmers.dto.Districts;
+import com.apnafarmers.dto.States;
 import com.apnafarmers.entity.Country;
-import com.apnafarmers.model.Cities;
-import com.apnafarmers.model.Countries;
-import com.apnafarmers.model.Districts;
-import com.apnafarmers.model.States;
 import com.apnafarmers.service.LocationService;
 import com.apnafarmers.utils.ApnaFarmersConstants;
 
@@ -100,27 +100,9 @@ public class LocationController {
 		log.info("Inside get All states");
 		return locationService.getAllStates(querryParam);
 	}
-
-	@GetMapping("/states/{name}")
-	public States getStateByName(@PathVariable(value = "name", required = false) String name,
-			@RequestParam(value = "countryId", required = false) String countryId,
-			@RequestParam(value = "lang", required = false) String language,
-			@RequestParam(value = "st", required = false) String startWith,
-			@RequestParam(value = "sort", required = false) String sort,
-			@RequestParam(value = "limit", required = false) String limit) {
-
-		Map<String, String> querryParam = new HashMap<>();
-		querryParam.put(ApnaFarmersConstants.COUNTRY_ID, countryId);
-		querryParam.put(ApnaFarmersConstants.LANGUAGE, language);
-		querryParam.put(ApnaFarmersConstants.STARTWITH, startWith);
-		querryParam.put(ApnaFarmersConstants.SORT, sort);
-		querryParam.put(ApnaFarmersConstants.LIMIT, limit);
-
-		return locationService.getStatesByName(name, querryParam);
-	}
-
-	@GetMapping("/cities")
-	public Cities getCities(@RequestParam(value = "stateId", required = false) String stateId,
+	
+	@GetMapping("/districts")
+	public Districts getDistrict(@RequestParam(value = "stateId", required = true) String stateId,
 			@RequestParam(value = "lang", required = false) String language,
 			@RequestParam(value = "st", required = false) String startWith,
 			@RequestParam(value = "sort", required = false) String sort,
@@ -133,48 +115,30 @@ public class LocationController {
 		querryParam.put(ApnaFarmersConstants.SORT, sort);
 		querryParam.put(ApnaFarmersConstants.LIMIT, limit);
 
-		log.info("Inside get Cities");
-		Cities cities = locationService.getAllCities(querryParam);
-		return cities;
-	}
-
-	@GetMapping("/cities/{name}")
-	public Cities getCityByName(@PathVariable(value = "name", required = true) String name,
-			@RequestParam(value = "stateId", required = false) String stateId,
-			@RequestParam(value = "lang", required = false) String language,
-			@RequestParam(value = "st", required = false) String startWith,
-			@RequestParam(value = "sort", required = false) String sort,
-			@RequestParam(value = "limit", required = false) String limit) {
-
-		Map<String, String> querryParam = new HashMap<>();
-		querryParam.put(ApnaFarmersConstants.STATE_ID, stateId);
-		querryParam.put(ApnaFarmersConstants.LANGUAGE, language);
-		querryParam.put(ApnaFarmersConstants.STARTWITH, startWith);
-		querryParam.put(ApnaFarmersConstants.SORT, sort);
-		querryParam.put(ApnaFarmersConstants.LIMIT, limit);
-
-		return locationService.getCityByName(name, querryParam);
-	}
-
-	@GetMapping("/district")
-	public Districts getDistrict(@RequestParam(value = "CITY", required = true) String stateId,
-			@RequestParam(value = "lang", required = false) String language,
-			@RequestParam(value = "st", required = false) String startWith,
-			@RequestParam(value = "sort", required = false) String sort,
-			@RequestParam(value = "limit", required = false) String limit) {
-
-		Map<String, String> querryParam = new HashMap<>();
-		querryParam.put(ApnaFarmersConstants.STATE_ID, stateId);
-		querryParam.put(ApnaFarmersConstants.LANGUAGE, language);
-		querryParam.put(ApnaFarmersConstants.STARTWITH, startWith);
-		querryParam.put(ApnaFarmersConstants.SORT, sort);
-		querryParam.put(ApnaFarmersConstants.LIMIT, limit);
-
-		Districts districts = locationService.getDistrict(querryParam);
+		Districts districts = locationService.getAllDistricts(querryParam);
 
 		return districts;
 	}
+
 	
-	
+	@GetMapping("/cities")
+	public Cities getCitiesByDistrict(@RequestParam(value = "districtId", required = true) String districtId,
+			@RequestParam(value = "lang", required = false) String language,
+			@RequestParam(value = "st", required = false) String startWith,
+			@RequestParam(value = "sort", required = false) String sort,
+			@RequestParam(value = "limit", required = false) String limit) {
+
+		Map<String, String> querryParam = new HashMap<>();
+		querryParam.put(ApnaFarmersConstants.DISTRICT_ID, districtId);
+		querryParam.put(ApnaFarmersConstants.LANGUAGE, language);
+		querryParam.put(ApnaFarmersConstants.STARTWITH, startWith);
+		querryParam.put(ApnaFarmersConstants.SORT, sort);
+		querryParam.put(ApnaFarmersConstants.LIMIT, limit);
+
+		Cities cities = locationService.getAllCitiesByDistrict(querryParam);
+
+		return cities;
+	}
+
 
 }

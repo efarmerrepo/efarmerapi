@@ -11,8 +11,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +26,6 @@ import lombok.ToString;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "farmer")
 @JsonInclude(Include.NON_EMPTY)
 public class Farmer {
 
@@ -33,19 +33,25 @@ public class Farmer {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	private String profileImage;
+
 	private String firstName;
 
 	private String lastName;
 
-	private Long land;
+	private String mobileNumber;
+
+	private String whatsAppNumber;
+
+	private String email;
+
+	private String land;
 
 	private String landUnit;
 
-	private String city;
-
-	private String district;
-
-	private String pincode;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "location_id", referencedColumnName = "id")
+	private Location location;
 
 	@OneToMany(mappedBy = "farmer", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Media> medias = new HashSet<>();
@@ -54,7 +60,7 @@ public class Farmer {
 		medias.add(media);
 		media.setFarmer(this);
 	}
-	
+
 	@OneToMany(mappedBy = "farmer", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Crop> crops = new HashSet<>();
 

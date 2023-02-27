@@ -48,4 +48,8 @@ public class State {
 
 	@OneToMany(mappedBy = "state")
 	private List<City> cities;
+	
+	@OneToMany(mappedBy = "state")
+	private List<District> districts;
+
 }

@@ -16,10 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.apnafarmers.dto.CategoryResponse;
+import com.apnafarmers.dto.CropDto;
+import com.apnafarmers.entity.Category;
 import com.apnafarmers.entity.Crop;
-import com.apnafarmers.entity.Farmer;
 import com.apnafarmers.exception.ResourceNotFoundException;
-import com.apnafarmers.model.CropDto;
 import com.apnafarmers.service.CropService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -48,13 +49,11 @@ public class CropController {
 		List<CropDto> cropDtoList = new ArrayList<>();
 		for (Crop crop : crops) {
 
-			Farmer farmer = crop.getFarmer();
-
-			CropDto response = CropDto.builder().id(crop.getId()).fName(farmer.getFirstName())
-					.lName(farmer.getLastName()).cropTypeId(crop.getCropTypeId()).cropType(crop.getCropType())
-					.cropName(crop.getName()).rate(crop.getRate()).quantity(crop.getQuantity())
-					.quantityUnit(crop.getQuantityUnit()).land(crop.getLand()).landUnit(crop.getLandUnit())
-					.city(crop.getCity()).district(crop.getDistrict()).pinCode(crop.getPinCode()).media(null).build();
+			CropDto response = CropDto.builder().id(crop.getId()).cropTypeId(crop.getCropTypeId())
+					.cropType(crop.getCropType()).cropName(crop.getName()).rate(crop.getRate())
+					.quantity(crop.getQuantity()).quantityUnit(crop.getQuantityUnit()).land(crop.getLand())
+					.landUnit(crop.getLandUnit()).city(crop.getCity()).district(crop.getDistrict())
+					.pinCode(crop.getPinCode()).media(null).build();
 
 			cropDtoList.add(response);
 		}
@@ -67,19 +66,26 @@ public class CropController {
 		Crop crop = cropService.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Not found Crop with id = " + id));
 
-		Farmer farmer = crop.getFarmer();
-		CropDto cropDto = CropDto.builder().id(crop.getId()).fName(farmer.getFirstName()).lName(farmer.getLastName())
-				.cropTypeId(crop.getCropTypeId()).cropType(crop.getCropType()).cropName(crop.getName())
-				.rate(crop.getRate()).quantity(crop.getQuantity()).quantityUnit(crop.getQuantityUnit())
-				.land(crop.getLand()).landUnit(crop.getLandUnit()).city(crop.getCity()).district(crop.getDistrict())
-				.pinCode(crop.getPinCode()).build();
+		CropDto cropDto = CropDto.builder().id(crop.getId()).cropTypeId(crop.getCropTypeId())
+				.cropType(crop.getCropType()).cropName(crop.getName()).rate(crop.getRate()).quantity(crop.getQuantity())
+				.quantityUnit(crop.getQuantityUnit()).land(crop.getLand()).landUnit(crop.getLandUnit())
+				.city(crop.getCity()).district(crop.getDistrict()).pinCode(crop.getPinCode()).build();
 
 		return new ResponseEntity<>(cropDto, HttpStatus.OK);
 	}
 
+	@GetMapping("/crops/categories")
+	public ResponseEntity<CategoryResponse> getCropCategories() {
+
+		List<Category> cropCategories = cropService.getCropCategories();
+		CategoryResponse build = CategoryResponse.builder().categories(cropCategories).build();
+
+		return new ResponseEntity<>(build, HttpStatus.OK);
+	}
+
 	@PostMapping("/crops")
 	public ResponseEntity<Crop> addCrop(@RequestBody CropDto request,
-			@RequestParam(value = "fid", required = true) Long farmerId) {
+			@RequestParam(value = "farmerId", required = true) Long farmerId) {
 		log.info("{}", request);
 		Crop crop = new Crop();
 		crop.setCropTypeId(request.getCropTypeId());
@@ -94,7 +100,7 @@ public class CropController {
 		crop.setDistrict(request.getDistrict());
 		crop.setPinCode(request.getPinCode());
 
-		Crop save = cropService.saveFarmer(crop);
+		Crop save = cropService.saveCrop(crop, farmerId);
 
 		return new ResponseEntity<>(save, HttpStatus.CREATED);
 	}
@@ -117,7 +123,7 @@ public class CropController {
 		crop.setDistrict(request.getDistrict());
 		crop.setPinCode(request.getPinCode());
 
-		return new ResponseEntity<>(cropService.saveFarmer(crop), HttpStatus.OK);
+		return new ResponseEntity<>(cropService.saveCrop(crop), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/crops/{id}")

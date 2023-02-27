@@ -28,9 +28,9 @@ public class Crop {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	private Long cropTypeId;
-	
+
 	private String cropType;
 
 	private String name;
@@ -44,15 +44,19 @@ public class Crop {
 	private String land;
 
 	private String landUnit;
-	
+
 	private String city;
-	
+
 	private String district;
-	
+
 	private String pinCode;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonIgnore
 	private Farmer farmer;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
+	private Buyer buyer;
 
 }

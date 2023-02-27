@@ -17,4 +17,5 @@ public interface StateRepository extends JpaRepository<State, Long> {
 	List<State> findByNameStartsWithIgnoreCaseOrderByName(String rating, Pageable pg);
 
 	State findByNameIgnoreCase(String name);
+	
 }

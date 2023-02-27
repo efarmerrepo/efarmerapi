@@ -1,4 +1,4 @@
-package com.apnafarmers.model;
+package com.apnafarmers.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
