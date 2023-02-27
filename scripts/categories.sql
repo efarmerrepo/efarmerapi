@@ -1,0 +1,4 @@
+INSERT INTO CATEGORY(id,name) VALUES (1,'Fruits');
+INSERT INTO CATEGORY(id,name) VALUES (2,'Vegetables');
+INSERT INTO CATEGORY(id,name) VALUES (3,'Pulses');
+INSERT INTO CATEGORY(id,name) VALUES (4,'Grains');
