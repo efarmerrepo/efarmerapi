@@ -1,0 +1,413 @@
+{
+	"info": {
+		"_postman_id": "a983d264-9a69-4ce1-ad94-67ecd5b07ac4",
+		"name": "Apna Farmer Secure",
+		"description": "Apna Farmers Backend API's",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13875711"
+	},
+	"item": [
+		{
+			"name": "Add User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ph\":\"9937791797\",\r\n    \"name\": \"vivek\",\r\n    \"email\": \"vivek.singh1693@gmail.com\",\r\n    \"password\":\"12345\",\r\n    \"roles\":\"ROLE_ADMIN\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/apnafarmers/v1/login/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apnafarmers",
+						"v1",
+						"login",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Authenticate User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"vivek\",\r\n    \"ph\":\"\",\r\n    \"password\":\"12345\",\r\n    \"otpRequired\":\"false\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/apnafarmers/v1/login/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apnafarmers",
+						"v1",
+						"login",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Validate User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ph\":\"9937791797\",\r\n    \"otp\":\"189547\",\r\n    \"rememberMe\":\"false\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/apnafarmers/v1/login/validate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apnafarmers",
+						"v1",
+						"login",
+						"validate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Countries",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwtToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/apnafarmers/v1/location/countries",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apnafarmers",
+						"v1",
+						"location",
+						"countries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get State By Country",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwtToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/apnafarmers/v1/location/states?countryId=101",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apnafarmers",
+						"v1",
+						"location",
+						"states"
+					],
+					"query": [
+						{
+							"key": "countryId",
+							"value": "101"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get District By State",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{jwtToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/apnafarmers/v1/location/districts?stateId=27",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apnafarmers",
+						"v1",
+						"location",
+						"districts"
+					],
+					"query": [
+						{
+							"key": "stateId",
+							"value": "27"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Cities By District",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{jwtToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/apnafarmers/v1/location/cities?districtId=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apnafarmers",
+						"v1",
+						"location",
+						"cities"
+					],
+					"query": [
+						{
+							"key": "districtId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Android Config",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{jwtToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/apnafarmers/v1/farmers/config",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apnafarmers",
+						"v1",
+						"farmers",
+						"config"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Buyer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwtToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"firstName\":\"Ashish\",\r\n   \"lastName\":\"Mahant\",\r\n   \"buyerTypeId\":\"1\",\r\n   \"mobileNumber\":\"12121\",\r\n   \"whatsappNumber\":\"12121\",\r\n   \"email\":\"email@gmail.com\",\r\n   \"address1\":\"stree1\",\r\n   \"address2\":\"stree1\",\r\n   \"stateId\":\"1\",\r\n   \"districtId\":\"2\",\r\n   \"tehsilId\":\"12\",\r\n   \"city\":\"Katol\",\r\n   \"pinCode\":\"440012\",\r\n   \"latitude\":121212.34,\r\n   \"longitude\":315212.34,\r\n   \"companyName\":\"Unique Traders\",\r\n   \"crops\":[\r\n      {\r\n         \"id\":1,\r\n         \"cropName\":\"Orange\"\r\n      },\r\n      {\r\n         \"id\":2,\r\n         \"cropName\":\"Tomatto\"\r\n      }\r\n   ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/apnafarmers/v1/buyers/details",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apnafarmers",
+						"v1",
+						"buyers",
+						"details"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Farmer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwtToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"profileImage\": \"base64Imagestring\",\r\n\t\"fName\": \"Ashish\",\r\n\t\"lName\": \"Mahant\",\r\n\t\"mobileNumber\": \"12121\",\r\n\t\"whatsappNumber\": \"12121\",\r\n\t\"email\": \"email@gmail.com\",\r\n\t\"latitude\": 121212.34,\r\n\t\"longitude\": 315212.34,\r\n\t\"address1\": \"stree1\",\r\n\t\"village\": \"name\",\r\n\t\"stateId\": \"1\",\r\n\t\"districtId\": \"2\",\r\n\t\"tehsilId\": \"12\",\r\n\t\"city\": \"Katol\",\r\n\t\"pinCode\": \"440012\",\r\n\t\"land\": \"20\",\r\n\t\"landUnit\": 12,\r\n\t\"crops\": [{\r\n\t\t\t\"id\": 1,\r\n\t\t\t\"cropName\": \"Orange\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"id\": 2,\r\n\t\t\t\"cropName\": \"Tomatto\"\r\n\t\t}\r\n\t]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/apnafarmers/v1/farmers/details",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apnafarmers",
+						"v1",
+						"farmers",
+						"details"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Farmer By FarmerId",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwtToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/apnafarmers/v1/farmers/details?farmerId=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apnafarmers",
+						"v1",
+						"farmers",
+						"details"
+					],
+					"query": [
+						{
+							"key": "farmerId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Crop",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwtToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\t\t\"id\":\"1\",\r\n\t\t\t\"cropTypeId\":\"1\",\r\n\t\t\t\"cropType\":\"Fruits\",\r\n\t\t\t\"cropName\":\"Orange\",\r\n\t\t\t\"rate\":\"20\",\r\n\t\t\t\"quantity\":\"10\",\r\n\t\t\t\"quantityUnit\":\"ton\",\r\n\t\t\t\"land\":\"20\",\r\n\t\t\t\"landUnit\":\"Bigha\",\r\n\t\t\t\"city\":\"Katol\",\r\n\t\t\t\"district\":\"Nagpur\",\r\n\t\t\t\"pinCode\":\"444777\",\r\n\t\t\t\"media\":[\r\n\t\t\t\t{\r\n\t\t\t\t\t\"type\":\"image/video\",\r\n\t\t\t\t\t\"url\":\"https:google.dssds/asas\"\r\n\t\t\t\t},\r\n\t\t\t\t{\r\n\t\t\t\t\t\"type\":\"image/video\",\r\n\t\t\t\t\t\"url\":\"https:google.dssds/asas\"\r\n\t\t\t\t}\r\n\t\t\t]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/apnafarmers/v1/farmers/crops?farmerId=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apnafarmers",
+						"v1",
+						"farmers",
+						"crops"
+					],
+					"query": [
+						{
+							"key": "farmerId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
