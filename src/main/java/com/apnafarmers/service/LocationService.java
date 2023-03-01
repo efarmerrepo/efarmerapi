@@ -1,32 +1,22 @@
 package com.apnafarmers.service;
 
+import java.util.List;
 import java.util.Map;
 
-import com.apnafarmers.dto.Cities;
-import com.apnafarmers.dto.Countries;
-import com.apnafarmers.dto.Districts;
-import com.apnafarmers.dto.States;
+import com.apnafarmers.entity.City;
+import com.apnafarmers.entity.Country;
+import com.apnafarmers.entity.District;
+import com.apnafarmers.entity.State;
 
 public interface LocationService {
 
-	public Countries findAllCountries(Map<String, String> querryParam);
+	public List<Country> findAllCountries();
 
-	public Districts getDistrict(Map<String, String> querryParam);
+	public List<State>findAllStates(Map<String, String> querryParam);
 
-	public Countries findCountryById(Long countryId);
+	public List<District> findAllDistricts(Map<String, String> querryParam);
 
-	public Countries findCountryByName(String string);
+	public List<City> findAllCities(Map<String, String> querryParam);
 
-	public States getStatesByName(String name, Map<String, String> querryParam);
-
-	public States getAllStates(Map<String, String> querryParam);
-
-	public Cities getCityByName(String name, Map<String, String> querryParam);
-
-	public Cities getAllCities(Map<String, String> querryParam);
-
-	public Districts getAllDistricts(Map<String, String> querryParam);
-
-	public Cities getAllCitiesByDistrict(Map<String, String> querryParam);
 
 }

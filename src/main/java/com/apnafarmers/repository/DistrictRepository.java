@@ -14,7 +14,6 @@ public interface DistrictRepository extends JpaRepository<District, Long> {
 
 	List<District> findByNameStartsWithIgnoreCase(String startWith);
 
-//	@Query("FROM Country n where n.name = ?1")
 	List<District> findByNameStartsWithIgnoreCaseOrderByName(String rating, Pageable pg);
 
 	State findByNameIgnoreCase(String name);

@@ -2,7 +2,7 @@ package com.apnafarmers.dto;
 
 import java.util.List;
 
-import com.apnafarmers.entity.Category;
+import com.apnafarmers.entity.CropCategory;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,5 +15,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CategoryResponse {
 
-	List<Category> categories;
+	List<CropCategory> categories;
 }

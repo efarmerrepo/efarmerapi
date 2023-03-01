@@ -17,14 +17,10 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Data
 @Builder
-@Getter
-@Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -41,7 +37,7 @@ public class District {
 	private String pinCode;
 
 	@ManyToOne
-	@JoinColumn(name = "stateName", referencedColumnName = "name", nullable = false)
+	@JoinColumn(name = "stateId", referencedColumnName = "id", nullable = false)
 	@JsonIgnore
 	private State state;
 	

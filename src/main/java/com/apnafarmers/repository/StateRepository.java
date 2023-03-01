@@ -13,9 +13,8 @@ public interface StateRepository extends JpaRepository<State, Long> {
 
 	List<State> findByNameStartsWithIgnoreCase(String startWith);
 
-//	@Query("FROM Country n where n.name = ?1")
 	List<State> findByNameStartsWithIgnoreCaseOrderByName(String rating, Pageable pg);
 
 	State findByNameIgnoreCase(String name);
-	
+
 }

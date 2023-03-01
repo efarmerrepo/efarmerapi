@@ -18,14 +18,10 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Data
 @Builder
-@Getter
-@Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -47,9 +43,10 @@ public class State {
 	private Country country;
 
 	@OneToMany(mappedBy = "state")
-	private List<City> cities;
-	
-	@OneToMany(mappedBy = "state")
 	private List<District> districts;
+	
+//	@OneToMany(mappedBy = "state")
+//	private List<City> cities;
+//	
 
 }
