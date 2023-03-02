@@ -81,7 +81,7 @@ public class AuthenticationController {
 	}
 
 	@PostMapping("/validate")
-	public ResponseEntity<String> validateAndGetToken(@RequestBody VerifyTokenRequestDTO verifyTokenRequest) {
+	public ResponseEntity<GenericResponse> validateAndGetToken(@RequestBody VerifyTokenRequestDTO verifyTokenRequest) {
 
 		String jwtToken = "";
 		boolean isOtpValid = otpService.validateOTP(verifyTokenRequest);
@@ -95,7 +95,7 @@ public class AuthenticationController {
 		} else {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
-		return new ResponseEntity<>(jwtToken, HttpStatus.OK);
+		return new ResponseEntity<>(GenericResponse.builder().jwtToken(jwtToken).build(), HttpStatus.OK);
 
 	}
 
