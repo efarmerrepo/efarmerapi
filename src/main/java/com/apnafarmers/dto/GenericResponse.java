@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.apnafarmers.entity.City;
 import com.apnafarmers.entity.Country;
+import com.apnafarmers.entity.CropType;
 import com.apnafarmers.entity.District;
 import com.apnafarmers.entity.State;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -23,13 +24,15 @@ public class GenericResponse {
 	private List<State> states;
 	private List<District> districts;
 	private List<City> cities;
+	private List<CropType> categories;
+	private List<CropDto> crops;
 
 	private String jwtToken;
 
 	private Long farmerId;
-	
+
 	private Long cropId;
-	
+
 	private Long buyerId;
 
 }

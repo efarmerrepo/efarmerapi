@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 import com.apnafarmers.dto.AppConfig;
 import com.apnafarmers.entity.AndroidAppConfig;
 import com.apnafarmers.entity.BuyerType;
-import com.apnafarmers.entity.CropCategory;
+import com.apnafarmers.entity.CropType;
 import com.apnafarmers.entity.Farmer;
 import com.apnafarmers.entity.LandUnit;
 import com.apnafarmers.entity.WeightUnit;
 import com.apnafarmers.repository.AndroidAppConfigRepository;
 import com.apnafarmers.repository.BuyerTypeRepository;
-import com.apnafarmers.repository.CropCategoryRepository;
+import com.apnafarmers.repository.CropTypeRepository;
 import com.apnafarmers.repository.FarmerRepository;
 import com.apnafarmers.repository.LandUnitRepository;
 import com.apnafarmers.repository.WeightUnitRepository;
@@ -36,7 +36,7 @@ public class FarmerServiceImpl implements FarmerService {
 	private WeightUnitRepository weightUnitRepository;
 
 	@Autowired
-	private CropCategoryRepository cropCategoryRepository;
+	private CropTypeRepository cropTypeRepository;
 
 	@Autowired
 	private FarmerRepository farmerRepository;
@@ -48,7 +48,7 @@ public class FarmerServiceImpl implements FarmerService {
 		List<BuyerType> buyerTypeList = buyerTypeRepository.findAll();
 		List<LandUnit> landUnitList = landUnitRepository.findAll();
 		List<WeightUnit> weightUnitList = weightUnitRepository.findAll();
-		List<CropCategory> cropCategoryList = cropCategoryRepository.findAll();
+		List<CropType> cropCategoryList = cropTypeRepository.findAll();
 		AndroidAppConfig androidAppConfig = null;
 		if(androidAppConfigList.size() > 0) {
 			 androidAppConfig = androidAppConfigList.get(0);

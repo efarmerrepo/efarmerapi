@@ -17,6 +17,7 @@ import com.apnafarmers.dto.AuthRequest;
 import com.apnafarmers.dto.GenericResponse;
 import com.apnafarmers.dto.VerifyTokenRequestDTO;
 import com.apnafarmers.entity.UserInfo;
+import com.apnafarmers.exception.DataNotFoundException;
 import com.apnafarmers.jwt.JwtService;
 import com.apnafarmers.service.OtpService;
 import com.apnafarmers.service.UserService;
@@ -90,7 +91,7 @@ public class AuthenticationController {
 
 			Optional<UserInfo> userInfo = service.findByPh(verifyTokenRequest.getPh());
 
-			UserInfo user = userInfo.orElseThrow();
+			UserInfo user = userInfo.orElseThrow(()-> new DataNotFoundException());
 			jwtToken = jwtService.generateToken(user.getName());
 		} else {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

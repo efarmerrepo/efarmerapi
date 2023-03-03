@@ -1,6 +1,8 @@
 package com.apnafarmers.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,11 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.apnafarmers.dto.CategoryResponse;
 import com.apnafarmers.dto.CropDto;
 import com.apnafarmers.dto.GenericResponse;
 import com.apnafarmers.entity.Crop;
-import com.apnafarmers.entity.CropCategory;
+import com.apnafarmers.entity.CropType;
 import com.apnafarmers.service.CropService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,8 +35,12 @@ public class CropController {
 			@RequestParam(value = "farmerId", required = true) Long farmerId) {
 		log.info("Insid addCrop {}", request);
 		Crop crop = new Crop();
-		crop.setCropTypeId(request.getCropTypeId());
-		crop.setCropType(request.getCropType());
+		CropType cropType = new CropType();
+		Long cropTypeId = request.getCropTypeId();
+		String cropTypeName = request.getCropType();
+		cropType.setId(cropTypeId);
+		cropType.setName(cropTypeName);
+		crop.setCropType(cropType);
 		crop.setName(request.getCropName());
 		crop.setRate(request.getRate());
 		crop.setQuantity(request.getQuantity());
@@ -53,13 +58,19 @@ public class CropController {
 				HttpStatus.CREATED);
 	}
 
-	@GetMapping("/crops/categories")
-	public ResponseEntity<CategoryResponse> getCropCategories() {
+	@GetMapping("/crops")
+	public ResponseEntity<GenericResponse> getCropNameByCategory(
+			@RequestParam(value = "cropCategory", required = true) Long cropCategory) {
 
-		List<CropCategory> cropCategories = cropService.getCropCategories();
-		CategoryResponse build = CategoryResponse.builder().categories(cropCategories).build();
-
-		return new ResponseEntity<>(build, HttpStatus.OK);
+		Set<Crop> cropNameByCategory = cropService.getCropNameByCategory(cropCategory);
+		List<CropDto> crops = new ArrayList<>();
+		for (Crop crop : cropNameByCategory) {
+			CropDto cropDto = new CropDto();
+			cropDto.setId(crop.getId());
+			cropDto.setCropName(crop.getName());
+			crops.add(cropDto);
+		}
+		return new ResponseEntity<>(GenericResponse.builder().crops(crops).build(), HttpStatus.OK);
 	}
 
 }

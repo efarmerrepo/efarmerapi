@@ -81,8 +81,8 @@ public class FarmerController {
 		for (Crop crop : crops) {
 			cropDtoList.add(CropDto.builder()
 					.id(crop.getId())
-					.cropTypeId(crop.getCropTypeId())
-					.cropType(crop.getCropType())
+					.cropTypeId(crop.getCropType().getId())
+					.cropType(crop.getCropType().getName())
 					.cropName(crop.getName())
 					.rate(crop.getRate())
 					.quantity(crop.getQuantity())

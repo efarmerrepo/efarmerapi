@@ -9,11 +9,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,10 +28,6 @@ public class Crop {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
-	private Long cropTypeId;
-	
-	private String cropType;
 
 	private String name;
 
@@ -60,5 +54,11 @@ public class Crop {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonIgnore
 	private Buyer buyer;
+	
+	
+//	@JoinColumn(name = "cropTypeId", referencedColumnName = "id", nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
+	private CropType cropType;
 
 }
