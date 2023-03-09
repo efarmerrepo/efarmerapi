@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +45,7 @@ public class CropController {
 		cropType.setId(cropTypeId);
 		cropType.setName(cropTypeName);
 		crop.setCropType(cropType);
-		crop.setName(request.getName());
+		crop.setName(request.getCropName());
 		crop.setRate(request.getRate());
 		crop.setQuantity(request.getQuantity());
 		crop.setQuantityUnit(request.getQuantityUnit());
@@ -90,9 +91,20 @@ public class CropController {
 		querryParam.put(ApnaFarmersConstants.LIMIT, limit);
 		querryParam.put(ApnaFarmersConstants.OFFSET, offset);
 
+		List<CropDto> cropDtoList = new ArrayList<>();
 		List<Crop> crops = cropService.getCropByParemeters(querryParam);
 
-		List<CropDto> cropDtoList = new ArrayList<>();
+		if (StringUtils.isNotEmpty(cropCategory)) {
+			for (Crop crop : crops) {
+
+				CropDto cropDto = new CropDto();
+				cropDto.setId(crop.getId());
+				cropDto.setCropName(crop.getName());
+				cropDtoList.add(cropDto);
+			}
+			return new ResponseEntity<>(GenericResponse.builder().crops(cropDtoList).build(), HttpStatus.OK);
+		}
+
 		for (Crop crop : crops) {
 			CropDto cropDto = new CropDto();
 			cropDto.setId(crop.getId());

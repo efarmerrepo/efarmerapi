@@ -97,6 +97,11 @@ public class CropServiceImpl implements CropService {
 
 		} else if (StringUtils.isNotEmpty(cropCategory)) {
 
+			Optional<CropType> findById = cropCategoryRepository.findById(Long.valueOf(cropCategory));
+			CropType cropTypeFromDb = findById.orElseThrow(() -> new DataNotFoundException());
+			Set<Crop> crops2 = cropTypeFromDb.getCrops();
+			crops = new ArrayList<>(crops2);
+
 		} else if (StringUtils.isNotEmpty(cropId)) {
 			Optional<Crop> findById = cropRepository.findById(Long.valueOf(cropId));
 			Crop crop = findById.orElseThrow(null);
