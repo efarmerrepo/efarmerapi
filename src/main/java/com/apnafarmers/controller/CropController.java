@@ -1,7 +1,9 @@
 package com.apnafarmers.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import com.apnafarmers.dto.GenericResponse;
 import com.apnafarmers.entity.Crop;
 import com.apnafarmers.entity.CropType;
 import com.apnafarmers.service.CropService;
+import com.apnafarmers.utils.ApnaFarmersConstants;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,7 +44,7 @@ public class CropController {
 		cropType.setId(cropTypeId);
 		cropType.setName(cropTypeName);
 		crop.setCropType(cropType);
-		crop.setName(request.getCropName());
+		crop.setName(request.getName());
 		crop.setRate(request.getRate());
 		crop.setQuantity(request.getQuantity());
 		crop.setQuantityUnit(request.getQuantityUnit());
@@ -67,10 +70,28 @@ public class CropController {
 		for (Crop crop : cropNameByCategory) {
 			CropDto cropDto = new CropDto();
 			cropDto.setId(crop.getId());
-			cropDto.setCropName(crop.getName());
+			cropDto.setName(crop.getName());
 			crops.add(cropDto);
 		}
 		return new ResponseEntity<>(GenericResponse.builder().crops(crops).build(), HttpStatus.OK);
+	}
+
+	@RequestMapping(value = { "/crops" })
+	public ResponseEntity<GenericResponse> getCropByParemeters(
+			@RequestParam(value = "stateId", required = false) String stateId,
+			@RequestParam(value = "districtId", required = false) String districtId,
+			@RequestParam(value = "sort", required = false) String sort,
+			@RequestParam(value = "limit", required = false) String limit) {
+
+		Map<String, String> querryParam = new HashMap<>();
+//		querryParam.put(ApnaFarmersConstants.LANGUAGE, language);
+//		querryParam.put(ApnaFarmersConstants.STARTWITH, startWith);
+//		querryParam.put(ApnaFarmersConstants.SORT, sort);
+//		querryParam.put(ApnaFarmersConstants.LIMIT, limit);
+//		cropService.getCropByParemeters(querryParam);
+
+		return new ResponseEntity<>(GenericResponse.builder().crops(null).build(), HttpStatus.OK);
+
 	}
 
 }

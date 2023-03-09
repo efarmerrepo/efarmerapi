@@ -1,10 +1,11 @@
 package com.apnafarmers.dto;
 
 import java.util.List;
+import java.util.Locale.Category;
 
 import com.apnafarmers.entity.AndroidAppConfig;
 import com.apnafarmers.entity.BuyerType;
-import com.apnafarmers.entity.CropType;
+import com.apnafarmers.entity.Crop;
 import com.apnafarmers.entity.LandUnit;
 import com.apnafarmers.entity.WeightUnit;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -26,6 +27,6 @@ public class AppConfig {
 
 	List<BuyerType> buyerType;
 	
-	List<CropType> cropCategories;
+	List<Category> categories;
 
 }

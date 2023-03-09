@@ -17,8 +17,8 @@ public class FarmerDto {
 
 	private long farmerId;
 	private String profileImage;
-	private String fName;
-	private String lName;
+	private String firstName;
+	private String lastName;
 	private String mobileNumber;
 	private String whatsappNumber;
 	private String email;

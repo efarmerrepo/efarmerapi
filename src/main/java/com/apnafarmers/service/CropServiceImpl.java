@@ -1,6 +1,7 @@
 package com.apnafarmers.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -57,6 +58,12 @@ public class CropServiceImpl implements CropService {
 		CropType cropType = findById.orElseThrow(() -> new DataNotFoundException());
 		Set<Crop> crops = cropType.getCrops();
 		return crops;
+	}
+
+	@Override
+	public void getCropByParemeters(Map<String, String> querryParam) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

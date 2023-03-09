@@ -27,7 +27,7 @@ public class CropDto {
 
 	private String cropType;
 
-	private String cropName;
+	private String name;
 
 	private Double rate;
 

@@ -42,7 +42,7 @@ public class OtpService {
 		UserInfo user = userInfo.orElseThrow(() -> new DataNotFoundException());
 
 		String email = user.getEmail();
-		String ph = user.getPh();
+		String ph = user.getMobileNumber();
 
 		Integer otpValue = otpGenerator.generateOTP(ph);
 		if (otpValue == -1) {
@@ -79,7 +79,7 @@ public class OtpService {
 				otpGenerator.clearOTPFromCache(ph);
 
 				UserInfo userInfo = new UserInfo();
-				userInfo.setPh(ph);
+				userInfo.setMobileNumber(ph);
 				userInfo.setRoles("ROLE_USER");
 				Optional<UserInfo> findByPh = userService.findByPh(ph);
 				if (findByPh.isEmpty()) {

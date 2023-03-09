@@ -25,7 +25,7 @@ public class UserService {
 	}
 
 	public Optional<UserInfo> findByPh(String ph) {
-		Optional<UserInfo> findByPh = userInfoRepository.findByPh(ph);
+		Optional<UserInfo> findByPh = userInfoRepository.findByMobileNumber(ph);
 		return findByPh;
 	}
 	

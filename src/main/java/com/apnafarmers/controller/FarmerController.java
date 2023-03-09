@@ -54,8 +54,8 @@ public class FarmerController {
 		//@formatter:off
 		 FarmerDtoBuilder farmerBuilder = FarmerDto.builder()
 				.farmerId(farmer.getId())
-				.fName(farmer.getFirstName())
-				.lName(farmer.getLastName())
+				.firstName(farmer.getFirstName())
+				.lastName(farmer.getLastName())
 				.land(farmer.getLand())
 				.landUnit(farmer.getLandUnit());
 		
@@ -83,7 +83,7 @@ public class FarmerController {
 					.id(crop.getId())
 					.cropTypeId(crop.getCropType().getId())
 					.cropType(crop.getCropType().getName())
-					.cropName(crop.getName())
+					.name(crop.getName())
 					.rate(crop.getRate())
 					.quantity(crop.getQuantity())
 					.quantityUnit(crop.getQuantityUnit())
@@ -112,8 +112,8 @@ public class FarmerController {
 		Farmer farmer = new Farmer();
 
 		farmer.setProfileImage(request.getProfileImage());
-		farmer.setFirstName(request.getFName());
-		farmer.setLastName(request.getLName());
+		farmer.setFirstName(request.getFirstName());
+		farmer.setLastName(request.getLastName());
 		farmer.setMobileNumber(request.getMobileNumber());
 		farmer.setWhatsAppNumber(request.getWhatsappNumber());
 		farmer.setEmail(request.getEmail());

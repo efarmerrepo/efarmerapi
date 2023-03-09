@@ -1,6 +1,7 @@
 package com.apnafarmers.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.apnafarmers.entity.Crop;
@@ -15,5 +16,7 @@ public interface CropService {
 	CropType saveCropType(CropType cropType);
 
 	Set<Crop> getCropNameByCategory(Long cropCategory);
+
+	void getCropByParemeters(Map<String, String> querryParam);
 
 }
