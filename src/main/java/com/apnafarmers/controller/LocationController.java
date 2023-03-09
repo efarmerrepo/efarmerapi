@@ -31,7 +31,7 @@ public class LocationController {
 	LocationService locationService;
 
 	@GetMapping("/countries")
-	public ResponseEntity<GenericResponse> getAllCountries() {
+	public ResponseEntity<GenericResponse> getAllCountries(@RequestParam(value = "language", required = false) String language) {
 		log.info("Inside get All countries ");
 		List<Country> findAllCountries = locationService.findAllCountries();
 		GenericResponse response = GenericResponse.builder().countries(findAllCountries).build();
@@ -41,7 +41,7 @@ public class LocationController {
 
 	@GetMapping("/states")
 	public ResponseEntity<GenericResponse> getState(
-			@RequestParam(value = "countryId", required = false) String countryId) {
+			@RequestParam(value = "countryId", required = false) String countryId,@RequestParam(value = "language", required = false) String language) {
 		log.info("Inside get All states");
 
 		Map<String, String> querryParam = new HashMap<>();

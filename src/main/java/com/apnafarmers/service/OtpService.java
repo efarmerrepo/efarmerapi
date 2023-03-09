@@ -33,8 +33,8 @@ public class OtpService {
 	public Boolean generateOtp(AuthRequest authRequest) {
 		Optional<UserInfo> userInfo;
 
-		if (authRequest.getPh() != null) {
-			userInfo = userService.findByPh(authRequest.getPh());
+		if (authRequest.getMobileNumber() != null) {
+			userInfo = userService.findByPh(authRequest.getMobileNumber());
 		} else {
 			userInfo = userService.findByUserName(authRequest.getUsername());
 		}
@@ -67,7 +67,7 @@ public class OtpService {
 
 	public Boolean validateOTP(VerifyTokenRequestDTO verifyTokenRequest) {
 		log.info("Inside validateOTP");
-		String ph = verifyTokenRequest.getPh();
+		String ph = verifyTokenRequest.getMobileNumber();
 
 		// get OTP from cache
 		try {

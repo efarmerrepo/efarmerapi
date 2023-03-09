@@ -13,7 +13,7 @@ public class VerifyTokenRequestDTO {
 
 	@Size(min = 10, max = 10)
 	@Pattern(regexp = "(^$|[0-9]{10})")
-	private String ph;
+	private String mobileNumber;
 
 	private Integer otp;
 
