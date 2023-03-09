@@ -89,7 +89,7 @@ public class AuthenticationController {
 
 		if (isOtpValid) {
 
-			Optional<UserInfo> userInfo = service.findByPh(verifyTokenRequest.getPh());
+			Optional<UserInfo> userInfo = service.findByPh(verifyTokenRequest.getMobileNumber());
 
 			UserInfo user = userInfo.orElseThrow(()-> new DataNotFoundException());
 			jwtToken = jwtService.generateToken(user.getName());

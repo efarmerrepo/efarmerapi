@@ -13,7 +13,7 @@ public class AuthRequest {
 
 	@Size(min = 10, max = 10)
 	@Pattern(regexp = "(^$|[0-9]{10})")
-	private String ph;
+	private String mobileNumber;
 	private String username;
 	private String password;
 	
