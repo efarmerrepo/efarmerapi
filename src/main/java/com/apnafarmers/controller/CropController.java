@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +19,7 @@ import com.apnafarmers.dto.CropDto;
 import com.apnafarmers.dto.GenericResponse;
 import com.apnafarmers.entity.Crop;
 import com.apnafarmers.entity.CropType;
+import com.apnafarmers.entity.Farmer;
 import com.apnafarmers.service.CropService;
 import com.apnafarmers.utils.ApnaFarmersConstants;
 
@@ -89,11 +89,34 @@ public class CropController {
 		querryParam.put(ApnaFarmersConstants.AVAILABILITY_TO_DATE, avilabilityToDate);
 		querryParam.put(ApnaFarmersConstants.LIMIT, limit);
 		querryParam.put(ApnaFarmersConstants.OFFSET, offset);
-		
-		cropService.getCropByParemeters(querryParam);
-		
 
-		return new ResponseEntity<>(GenericResponse.builder().crops(null).build(), HttpStatus.OK);
+		List<Crop> crops = cropService.getCropByParemeters(querryParam);
+
+		List<CropDto> cropDtoList = new ArrayList<>();
+		for (Crop crop : crops) {
+			CropDto cropDto = new CropDto();
+			cropDto.setId(crop.getId());
+
+			Farmer farmer = crop.getFarmer();
+			cropDto.setFirstName(farmer.getFirstName());
+			cropDto.setLastName(farmer.getLastName());
+			CropType type = crop.getCropType();
+			cropDto.setCropTypeId(type.getId());
+			cropDto.setCropType(type.getName());
+			cropDto.setCropName(crop.getName());
+			cropDto.setRate(crop.getRate());
+			cropDto.setQuantity(crop.getQuantity());
+			cropDto.setQuantityUnit(crop.getQuantityUnit());
+			cropDto.setLand(crop.getLand());
+			cropDto.setLandUnit(crop.getLandUnit());
+			cropDto.setCity(crop.getCity());
+			cropDto.setDistrict(crop.getDistrict());
+			cropDto.setPinCode(pinCode);
+			cropDto.setMedia(null);
+			cropDtoList.add(cropDto);
+		}
+
+		return new ResponseEntity<>(GenericResponse.builder().crops(cropDtoList).build(), HttpStatus.OK);
 
 	}
 

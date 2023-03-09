@@ -17,6 +17,6 @@ public interface CropService {
 
 	Set<Crop> getCropNameByCategory(Long cropCategory);
 
-	void getCropByParemeters(Map<String, String> querryParam);
+	List<Crop>  getCropByParemeters(Map<String, String> querryParam);
 
 }

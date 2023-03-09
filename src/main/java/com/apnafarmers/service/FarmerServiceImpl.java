@@ -1,5 +1,6 @@
 package com.apnafarmers.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +40,7 @@ public class FarmerServiceImpl implements FarmerService {
 
 	@Autowired
 	private CropTypeRepository cropTypeRepository;
-	
+
 	@Autowired
 	private CropRepository cropRepository;
 
@@ -53,7 +54,14 @@ public class FarmerServiceImpl implements FarmerService {
 		List<BuyerType> buyerTypeList = buyerTypeRepository.findAll();
 		List<LandUnit> landUnitList = landUnitRepository.findAll();
 		List<WeightUnit> weightUnitList = weightUnitRepository.findAll();
-		List<Crop> cropCategoryList = cropRepository.findAll();
+		List<CropType> cropTypeList = cropTypeRepository.findAll();
+		
+		List<CropType> removeCropFromCropType = new ArrayList<>();
+		for (CropType cropType : cropTypeList) {
+			cropType.setCrops(null);
+			removeCropFromCropType.add(cropType);
+		}
+		
 		AndroidAppConfig androidAppConfig = null;
 		if(androidAppConfigList.size() > 0) {
 			 androidAppConfig = androidAppConfigList.get(0);
@@ -64,7 +72,7 @@ public class FarmerServiceImpl implements FarmerService {
 		.buyerType(buyerTypeList)
 		.landUnit(landUnitList)
 		.weightUnit(weightUnitList)
-//		.cropList(cropCategoryList)
+		.categories(removeCropFromCropType)
 		.build();
 		return build;
 	}

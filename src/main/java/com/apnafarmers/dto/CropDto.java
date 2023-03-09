@@ -23,10 +23,16 @@ public class CropDto {
 
 	private Long id;
 
+	private String firstName;
+	
+	private String lastName;
+	
 	private Long cropTypeId;
 
 	private String cropType;
 
+	private String cropName;
+	
 	private String name;
 
 	private Double rate;
