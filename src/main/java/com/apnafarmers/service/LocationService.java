@@ -18,5 +18,7 @@ public interface LocationService {
 
 	public List<City> findAllCities(Map<String, String> querryParam);
 
+	String findStateById(long id);
+
 
 }

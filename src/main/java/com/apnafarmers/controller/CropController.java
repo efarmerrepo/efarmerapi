@@ -61,34 +61,37 @@ public class CropController {
 				HttpStatus.CREATED);
 	}
 
-	@GetMapping("/crops")
-	public ResponseEntity<GenericResponse> getCropNameByCategory(
-			@RequestParam(value = "cropCategory", required = true) Long cropCategory) {
-
-		Set<Crop> cropNameByCategory = cropService.getCropNameByCategory(cropCategory);
-		List<CropDto> crops = new ArrayList<>();
-		for (Crop crop : cropNameByCategory) {
-			CropDto cropDto = new CropDto();
-			cropDto.setId(crop.getId());
-			cropDto.setName(crop.getName());
-			crops.add(cropDto);
-		}
-		return new ResponseEntity<>(GenericResponse.builder().crops(crops).build(), HttpStatus.OK);
-	}
-
-	@RequestMapping(value = { "/crops" })
+	@GetMapping(value = { "/crops" })
 	public ResponseEntity<GenericResponse> getCropByParemeters(
 			@RequestParam(value = "stateId", required = false) String stateId,
 			@RequestParam(value = "districtId", required = false) String districtId,
-			@RequestParam(value = "sort", required = false) String sort,
-			@RequestParam(value = "limit", required = false) String limit) {
+			@RequestParam(value = "cityId", required = false) String cityId,
+			@RequestParam(value = "cropCategory", required = false) String cropCategory,
+			@RequestParam(value = "cropId", required = false) String cropId,
+			@RequestParam(value = "quality", required = false) String quality,
+			@RequestParam(value = "cropType", required = false) String cropType,
+			@RequestParam(value = "pinCode", required = false) String pinCode,
+			@RequestParam(value = "avilabilityFromDate", required = false) String avilabilityFromDate,
+			@RequestParam(value = "avilabilityToDate", required = false) String avilabilityToDate,
+			@RequestParam(value = "limit", required = false) String limit,
+			@RequestParam(value = "offset", required = false) String offset) {
 
 		Map<String, String> querryParam = new HashMap<>();
-//		querryParam.put(ApnaFarmersConstants.LANGUAGE, language);
-//		querryParam.put(ApnaFarmersConstants.STARTWITH, startWith);
-//		querryParam.put(ApnaFarmersConstants.SORT, sort);
-//		querryParam.put(ApnaFarmersConstants.LIMIT, limit);
-//		cropService.getCropByParemeters(querryParam);
+		querryParam.put(ApnaFarmersConstants.STATE_ID, stateId);
+		querryParam.put(ApnaFarmersConstants.DISTRICT_ID, districtId);
+		querryParam.put(ApnaFarmersConstants.CITY_ID, cityId);
+		querryParam.put(ApnaFarmersConstants.CROP_CATEGORY, cropCategory);
+		querryParam.put(ApnaFarmersConstants.CROP_ID, cropId);
+		querryParam.put(ApnaFarmersConstants.QUALITY, quality);
+		querryParam.put(ApnaFarmersConstants.CROP_TYPE, cropType);
+		querryParam.put(ApnaFarmersConstants.PINCODE, pinCode);
+		querryParam.put(ApnaFarmersConstants.AVAILABILITY_FROM_DATE, avilabilityFromDate);
+		querryParam.put(ApnaFarmersConstants.AVAILABILITY_TO_DATE, avilabilityToDate);
+		querryParam.put(ApnaFarmersConstants.LIMIT, limit);
+		querryParam.put(ApnaFarmersConstants.OFFSET, offset);
+		
+		cropService.getCropByParemeters(querryParam);
+		
 
 		return new ResponseEntity<>(GenericResponse.builder().crops(null).build(), HttpStatus.OK);
 

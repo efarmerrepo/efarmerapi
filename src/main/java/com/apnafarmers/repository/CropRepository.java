@@ -16,4 +16,7 @@ public interface CropRepository extends JpaRepository<Crop, Long> {
 	List<Crop> findByNameStartsWithIgnoreCaseOrderByName(String rating, Pageable pg);
 
 	Crop findByNameIgnoreCase(String name);
+	
+	List<Crop> findByDistrict(String districtId);
+
 }

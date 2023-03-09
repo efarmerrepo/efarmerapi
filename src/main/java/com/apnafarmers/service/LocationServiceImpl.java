@@ -29,9 +29,9 @@ public class LocationServiceImpl implements LocationService {
 
 	@Autowired
 	StateRepository stateRepository;
-	
+
 	@Autowired
-	DistrictRepository districtRepository; 
+	DistrictRepository districtRepository;
 
 	@Override
 	public List<Country> findAllCountries() {
@@ -41,7 +41,6 @@ public class LocationServiceImpl implements LocationService {
 		log.info("Inside findAllCountries Ends");
 		return countries;
 	}
-
 
 	@Override
 	public List<State> findAllStates(Map<String, String> querryParam) {
@@ -76,7 +75,6 @@ public class LocationServiceImpl implements LocationService {
 		return districts;
 	}
 
-
 	@Override
 	public List<City> findAllCities(Map<String, String> querryParam) {
 		log.info("Inside findAllCities ");
@@ -90,6 +88,15 @@ public class LocationServiceImpl implements LocationService {
 		cities = district.getCities();
 
 		return cities;
+	}
+
+	@Override
+	public String findStateById(long id) {
+		Optional<State> findById = stateRepository.findById(id);
+		State state = findById.orElseThrow(() -> new ResourceNotFoundException("No State Found with stateId = " + id));
+
+		return state.getName();
+
 	}
 
 }
