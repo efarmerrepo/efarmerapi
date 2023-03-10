@@ -79,10 +79,6 @@ public class Crop {
 	private Farmer farmer;
 
 	@JsonIgnore
-	@ManyToOne(cascade = CascadeType.DETACH)
-	private Buyer buyer;
-
-	@JsonIgnore
 	@ManyToOne( cascade = CascadeType.DETACH)
 	private CropCategory cropCategory;
 

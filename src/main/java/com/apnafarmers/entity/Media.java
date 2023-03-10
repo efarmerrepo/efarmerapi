@@ -33,17 +33,14 @@ public class Media {
 
 	private String url;
 
-//	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-//	@JoinColumn(name = "mediaId", referencedColumnName = "id", nullable = false)
-//	@OnDelete(action = OnDeleteAction.CASCADE)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonIgnore
 	private Farmer farmer;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
+	private Buyer buyer;
 
-//	@ManyToOne
-//	@JoinColumn(name = "cropMedia", referencedColumnName = "id", nullable = false)
-//	@JsonIgnore
-//	private Crop crop;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonIgnore

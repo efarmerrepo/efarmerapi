@@ -15,20 +15,21 @@ import lombok.ToString;
 @Setter
 @ToString
 @JsonInclude(Include.NON_NULL)
-public class BuyerDto {
+public class BuyerRequest {
 
 	private String firstName;
 	private String lastName;
-	private long buyerTypeId;
+	private String profileImage;
+	private Long buyerTypeId;
 	private String mobileNumber;
 	private String whatsappNumber;
 	private String email;
 	private String address1;
 	private String address2;
-	private String stateId;
-	private String districtId;
-	private String tehsilId;
-	private String city;
+	private Long stateId;
+	private Long districtId;
+	private Long tehsilId;
+	private Long cityId;
 	private String pinCode;
 	private String latitude;
 	private String longitude;
@@ -36,4 +37,6 @@ public class BuyerDto {
 
 	private List<BuyerCropDto> crops;
 
+	private String description;
+	private List<MediaDTO> media;
 }

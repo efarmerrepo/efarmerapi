@@ -20,18 +20,18 @@ import lombok.ToString;
 @JsonInclude(Include.NON_EMPTY)
 public class CropRequest {
 
-	private long farmerId;
-	private long cropQuality;
-	private long cropTypeId;
-	private long cropCategoryId;
-	private long cropId;
+	private Long farmerId;
+	private Long cropQuality;
+	private Long cropTypeId;
+	private Long cropCategoryId;
+	private Long cropId;
 	private String cropName;
-	private long land;
-	private long landUnitId;
-	private double weight;
-	private long weightUnitId;
-	private double rate;
-	private long rateUnitId;
+	private Long land;
+	private Long landUnitId;
+	private Double weight;
+	private Long weightUnitId;
+	private Double rate;
+	private Long rateUnitId;
 	private String availabilityDate;
 	private String createdDate;
 	private boolean addressSameAsProfile;
@@ -39,20 +39,20 @@ public class CropRequest {
 	private String address2;
 
 	@NotNull
-	private long stateId;
-	
+	private Long stateId;
+
 	@NotNull
-	private long districtId;
-	
+	private Long districtId;
+
 	@NotNull
-	private long tehsilId;
-	
+	private Long tehsilId;
+
 	@NotNull
-	private long cityid;
-	
+	private Long cityid;
+
 	@NotNull
 	private String pinCode;
-	
+
 	private String description;
 	private List<MediaDTO> media;
 

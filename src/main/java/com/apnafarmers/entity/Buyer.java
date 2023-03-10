@@ -3,6 +3,7 @@ package com.apnafarmers.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -12,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
@@ -33,7 +35,11 @@ public class Buyer {
 
 	private String lastName;
 
-	private long buyerTypeId;
+	@JsonIgnore
+	@ManyToOne(cascade = CascadeType.DETACH)
+	private BuyerType buyerType;
+
+	private String profileImage;
 
 	private String mobileNumber;
 
@@ -48,11 +54,19 @@ public class Buyer {
 	private Location location;
 
 	@OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Crop> crops = new HashSet<>();
+	private Set<BuyerCrop> crops = new HashSet<>();
 
-	public void addCrop(Crop crop) {
+	public void addCrop(BuyerCrop crop) {
 		crops.add(crop);
 		crop.setBuyer(this);
+	}
+
+	@OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Media> medias = new HashSet<>();
+
+	public void addMedia(Media media) {
+		medias.add(media);
+		media.setBuyer(this);
 	}
 
 }
