@@ -15,7 +15,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @JsonInclude(Include.NON_NULL)
-public class BuyerRequest {
+public class BuyerResponse {
 
 	private String firstName;
 	private String lastName;
@@ -35,8 +35,9 @@ public class BuyerRequest {
 	private String longitude;
 	private String companyName;
 
-	private List<CropRequest> crops;
+	private List<CropResponse> crops;
 
 	private String description;
 	private List<MediaDTO> media;
+
 }

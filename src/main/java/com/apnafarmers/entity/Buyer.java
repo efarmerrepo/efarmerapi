@@ -54,9 +54,9 @@ public class Buyer {
 	private Location location;
 
 	@OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<BuyerCrop> crops = new HashSet<>();
+	private Set<Crop> crops = new HashSet<>();
 
-	public void addCrop(BuyerCrop crop) {
+	public void addCrop(Crop crop) {
 		crops.add(crop);
 		crop.setBuyer(this);
 	}

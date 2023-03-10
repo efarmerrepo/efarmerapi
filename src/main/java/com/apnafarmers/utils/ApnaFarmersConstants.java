@@ -7,7 +7,9 @@ public class ApnaFarmersConstants {
 	public static String DISTRICT_ID = "districtId";
 	public static String CITY_ID = "cityId";
 	public static String CROP_CATEGORY = "cropCategory";
+	public static String CROP_CATEGORY_ID = "cropCategoryId";
 	public static String CROP_ID = "cropId";
+	public static String BUYER_ID = "buyerId";
 	public static String QUALITY = "quality";
 	public static String CROP_TYPE = "cropType";
 	public static String PINCODE = "pinCode";

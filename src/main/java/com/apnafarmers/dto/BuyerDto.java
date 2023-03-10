@@ -34,6 +34,6 @@ public class BuyerDto {
 	private String longitude;
 	private String companyName;
 
-	private List<BuyerCropDto> crops;
+	private List<CropRequest> crops;
 
 }

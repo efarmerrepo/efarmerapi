@@ -95,5 +95,9 @@ public class Crop {
 	@JsonIgnore
 	@ManyToOne( cascade = CascadeType.DETACH)
 	private CropQuality cropQuality;
+	
+	@JsonIgnore
+	@ManyToOne(cascade = CascadeType.DETACH)
+	private Buyer buyer;
 
 }

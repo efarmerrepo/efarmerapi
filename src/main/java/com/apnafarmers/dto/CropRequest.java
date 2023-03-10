@@ -5,7 +5,6 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,19 +37,14 @@ public class CropRequest {
 	private String address;
 	private String address2;
 
-	@NotNull
 	private Long stateId;
 
-	@NotNull
 	private Long districtId;
 
-	@NotNull
 	private Long tehsilId;
 
-	@NotNull
 	private Long cityid;
 
-	@NotNull
 	private String pinCode;
 
 	private String description;
