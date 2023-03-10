@@ -4,13 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.apnafarmers.dto.BuyerRequest;
+import com.apnafarmers.dto.BuyerResponse;
 import com.apnafarmers.dto.CropRequest;
+import com.apnafarmers.dto.CropResponse;
 import com.apnafarmers.dto.MediaDTO;
 import com.apnafarmers.entity.Buyer;
 import com.apnafarmers.entity.Crop;
@@ -67,7 +70,78 @@ public class BuyerServiceImpl implements BuyerService {
 
 	@Override
 	public Buyer saveBuyer(BuyerRequest request) {
+		Buyer save = mapBuyerRequestToBuyerEntity(request);
+		return save;
 
+	}
+
+	@Override
+	public List<BuyerResponse> getBuyer(Map<String, String> querryParam) {
+
+		String cropCategoryId = querryParam.get(ApnaFarmersConstants.CROP_CATEGORY_ID);
+		String buyerId = querryParam.get(ApnaFarmersConstants.BUYER_ID);
+		String cropId = querryParam.get(ApnaFarmersConstants.CITY_ID);
+		List<Buyer> buyerList = new ArrayList<>();
+
+		if (StringUtils.isNotEmpty(cropId)) {
+			Crop crop = cropRepository.findById(Long.valueOf(cropId)).orElseThrow(() -> new DataNotFoundException(""));
+			Buyer buyer = crop.getBuyer();
+			buyerList.add(buyer);
+
+		} else if (StringUtils.isNotEmpty(buyerId)) {
+			Buyer buyer = buyerRepository.findById(Long.valueOf(buyerId))
+					.orElseThrow(() -> new DataNotFoundException(""));
+			buyerList.add(buyer);
+
+		} else if ((StringUtils.isNotEmpty(cropCategoryId))) {
+
+		}
+
+		return mapBuyerToBuyerResponse(buyerList);
+	}
+
+	private List<BuyerResponse> mapBuyerToBuyerResponse(List<Buyer> buyerList) {
+
+		List<BuyerResponse> buyerResponseList = new ArrayList<>();
+
+		for (Buyer buyer : buyerList) {
+			BuyerResponse buyerResponse = new BuyerResponse();
+			buyerResponse.setFirstName(buyer.getFirstName());
+			buyerResponse.setLastName(buyer.getLastName());
+			buyerResponse.setBuyerTypeId(buyer.getBuyerType().getId());
+			buyerResponse.setMobileNumber(buyer.getMobileNumber());
+			buyerResponse.setWhatsappNumber(buyer.getWhatsappNumber());
+			buyerResponse.setEmail(buyer.getEmail());
+			buyerResponse.setAddress1(buyer.getLocation().getAddress1());
+			buyerResponse.setAddress2(buyer.getLocation().getAddress2());
+			buyerResponse.setStateId(buyer.getLocation().getState().getId());
+			buyerResponse.setDistrictId(buyer.getLocation().getDistrict().getId());
+			buyerResponse.setTehsilId(buyer.getLocation().getTehsil().getId());
+			buyerResponse.setCityId(buyer.getLocation().getCity().getId());
+			buyerResponse.setPinCode(buyer.getLocation().getPinCode());
+			buyerResponse.setLatitude(buyer.getLocation().getLatitude());
+			buyerResponse.setLongitude(buyer.getLocation().getLongitude());
+			buyerResponse.setCompanyName(buyer.getCompanyName());
+
+			Set<Crop> cropsList = buyer.getCrops();
+			List<CropResponse> cropResponseList = new ArrayList<>();
+			if (cropsList != null) {
+				for (Crop crop : cropsList) {
+					CropResponse cropResponse = new CropResponse();
+					cropResponse.setId(crop.getId());
+					cropResponse.setCropName(crop.getName());
+					cropResponseList.add(cropResponse);
+				}
+			}
+			buyerResponse.setCrops(cropResponseList);
+
+			buyerResponseList.add(buyerResponse);
+		}
+
+		return buyerResponseList;
+	}
+
+	private Buyer mapBuyerRequestToBuyerEntity(BuyerRequest request) {
 		Buyer buyer = new Buyer();
 
 		buyer.setProfileImage(request.getProfileImage());
@@ -122,32 +196,6 @@ public class BuyerServiceImpl implements BuyerService {
 
 		Buyer save = buyerRepository.save(buyer);
 		return save;
-
-	}
-
-	@Override
-	public List<Buyer> getBuyer(Map<String, String> querryParam) {
-
-		String cropCategoryId = querryParam.get(ApnaFarmersConstants.CROP_CATEGORY_ID);
-		String buyerId = querryParam.get(ApnaFarmersConstants.BUYER_ID);
-		String cropId = querryParam.get(ApnaFarmersConstants.CITY_ID);
-		List<Buyer> buyerList = new ArrayList<>();
-
-		if (StringUtils.isNotEmpty(cropId)) {
-			Crop crop = cropRepository.findById(Long.valueOf(cropId)).orElseThrow(() -> new DataNotFoundException(""));
-			Buyer buyer = crop.getBuyer();
-			buyerList.add(buyer);
-
-		} else if (StringUtils.isNotEmpty(buyerId)) {
-			Buyer buyer = buyerRepository.findById(Long.valueOf(buyerId))
-					.orElseThrow(() -> new DataNotFoundException(""));
-			buyerList.add(buyer);
-
-		} else if ((StringUtils.isNotEmpty(cropCategoryId))) {
-
-		}
-
-		return buyerList;
 	}
 
 }

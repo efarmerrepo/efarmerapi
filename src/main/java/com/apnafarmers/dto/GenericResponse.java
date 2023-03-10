@@ -26,6 +26,8 @@ public class GenericResponse {
 	private List<City> cities;
 	private List<CropCategory> categories;
 	private List<CropResponse> crops;
+	
+	private List<BuyerResponse> buyers;
 
 	private String jwtToken;
 

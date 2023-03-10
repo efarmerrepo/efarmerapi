@@ -180,9 +180,25 @@ public class CropServiceImpl implements CropService {
 
 	@Override
 	public Crop saveCrop(CropRequest request) {
-
 		Crop crop = new Crop();
+		mapCropRequestToCropEntity(request, crop);
+		cropRepository.save(crop);
+		return crop;
+	}
 
+	@Override
+	public Crop updateCrop(CropRequest request) {
+
+		return null;
+	}
+
+	@Override
+	public void deleteCropCategories(long cropCategoryId) {
+
+		cropCategoryRepository.deleteById(cropCategoryId);
+	}
+
+	private void mapCropRequestToCropEntity(CropRequest request, Crop crop) {
 		long farmerId = request.getFarmerId();
 		Optional<Farmer> findById = farmerRepository.findById(farmerId);
 		Farmer farmer = findById.orElse(null);
@@ -242,22 +258,6 @@ public class CropServiceImpl implements CropService {
 			}
 		}
 		crop.setDescription(request.getDescription());
-
-		cropRepository.save(crop);
-
-		return crop;
-	}
-
-	@Override
-	public Crop updateCrop(CropRequest request) {
-
-		return null;
-	}
-
-	@Override
-	public void deleteCropCategories(long cropCategoryId) {
-		
-		cropCategoryRepository.deleteById(cropCategoryId);
 	}
 
 }

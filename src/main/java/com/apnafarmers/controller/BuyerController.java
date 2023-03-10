@@ -1,7 +1,6 @@
 package com.apnafarmers.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +41,8 @@ public class BuyerController {
 	}
 
 	@GetMapping("/profile")
-	public List<Buyer> getBuyer(@RequestParam(value = "cropCategoryId", required = false) String cropCategoryId,
+	public ResponseEntity<GenericResponse> getBuyer(
+			@RequestParam(value = "cropCategoryId", required = false) String cropCategoryId,
 			@RequestParam(value = "buyerId", required = false) String buyerId,
 			@RequestParam(value = "cropId", required = false) String cropId) {
 
@@ -51,9 +51,9 @@ public class BuyerController {
 		querryParam.put(ApnaFarmersConstants.BUYER_ID, buyerId);
 		querryParam.put(ApnaFarmersConstants.CITY_ID, cropId);
 
-		List<Buyer> buyer = buyerService.getBuyer(querryParam);
-
-		return buyer;
+		return new ResponseEntity<>(
+				GenericResponse.builder().message("Success").buyers(buyerService.getBuyer(querryParam)).build(),
+				HttpStatus.CREATED);
 	}
 
 }
