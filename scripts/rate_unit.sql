@@ -1,0 +1,3 @@
+INSERT INTO RATE_UNIT(id,name) VALUES (1,'Kg');
+INSERT INTO RATE_UNIT(id,name) VALUES (2,'Quintal');
+INSERT INTO RATE_UNIT(id,name) VALUES (3,'Ton');

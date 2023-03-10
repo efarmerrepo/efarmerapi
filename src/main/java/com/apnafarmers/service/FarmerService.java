@@ -1,16 +1,16 @@
 package com.apnafarmers.service;
 
-import java.util.Optional;
-
 import com.apnafarmers.dto.AppConfig;
+import com.apnafarmers.dto.FarmerRequest;
+import com.apnafarmers.dto.FarmerResponse;
 import com.apnafarmers.entity.Farmer;
 
 public interface FarmerService {
 
 	public AppConfig getAndroidAppConfig();
 
-	public Farmer saveFarmer(Farmer farmer);
+	public Farmer saveFarmer(FarmerRequest farmer);
 
-	public Optional<Farmer> findById(long id);
+	public FarmerResponse findById(long id);
 
 }

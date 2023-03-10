@@ -1,0 +1,3 @@
+INSERT INTO CROP_QUALITY(id,name) VALUES (1,'Average');
+INSERT INTO CROP_QUALITY(id,name) VALUES (2,'Good');
+INSERT INTO CROP_QUALITY(id,name) VALUES (3,'Export');

@@ -13,7 +13,7 @@ import lombok.ToString;
 @Builder
 @ToString
 @JsonInclude(Include.NON_NULL)
-public class FarmerDto {
+public class FarmerRequest {
 
 	private long farmerId;
 	private String profileImage;
@@ -22,17 +22,19 @@ public class FarmerDto {
 	private String mobileNumber;
 	private String whatsappNumber;
 	private String email;
+
+	private String address;
+	private String address2;
 	private String latitude;
 	private String longitude;
-	private String address1;
 	private String village;
-	private String stateId;
-	private String districtId;
-	private String tehsilId;
-	private String city;
+	private long stateId;
+	private long districtId;
+	private long tehsilId;
+	private long cityId;
 	private String pinCode;
+
 	private String land;
 	private String landUnit;
-	private List<MediaDto> media;
-	private List<CropDto> crops;
+	private List<MediaDTO> media;
 }

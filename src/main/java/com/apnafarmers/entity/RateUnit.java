@@ -8,22 +8,28 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(Include.NON_EMPTY)
-public class WeightUnit {
-
+public class RateUnit {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Long id;
 
 	private String name;
+
+//	@OneToMany(mappedBy = "cropType", cascade = CascadeType.DETACH, orphanRemoval = true)
+//	private Set<Crop> crops = new HashSet<>();
+
+//	public void addCrop(Crop crop) {
+//		crops.add(crop);
+//		crop.setRateUnit(this);
+//	}
 
 }

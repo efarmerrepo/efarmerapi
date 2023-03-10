@@ -61,7 +61,7 @@ public class Farmer {
 		media.setFarmer(this);
 	}
 
-	@OneToMany(mappedBy = "farmer", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "farmer", cascade = CascadeType.DETACH, orphanRemoval = true)
 	private Set<Crop> crops = new HashSet<>();
 
 	public void addCrop(Crop crop) {

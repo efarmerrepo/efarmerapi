@@ -5,35 +5,42 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+@Data
 @Builder
-@Getter
-@Setter
 @ToString
 @JsonInclude(Include.NON_NULL)
-public class BuyerDto {
-
+@NoArgsConstructor
+@AllArgsConstructor
+public class FarmerResponse {
+	
+	private long farmerId;
+	private String profileImage;
 	private String firstName;
 	private String lastName;
-	private long buyerTypeId;
 	private String mobileNumber;
 	private String whatsappNumber;
 	private String email;
-	private String address1;
+	
+	private String address;
 	private String address2;
-	private String stateId;
-	private String districtId;
-	private String tehsilId;
-	private String city;
-	private String pinCode;
 	private String latitude;
 	private String longitude;
-	private String companyName;
-
+	private String village;
+	private long stateId;
+	private long districtId;
+	private long tehsilId;
+	private long cityId;
+	private String pinCode;
+	
+	private String land;
+	private String landUnit;
+	private List<MediaDTO> media;
 	private List<CropResponse> crops;
 
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.apnafarmers.entity.AndroidAppConfig;
 import com.apnafarmers.entity.BuyerType;
-import com.apnafarmers.entity.CropType;
+import com.apnafarmers.entity.CropCategory;
 import com.apnafarmers.entity.LandUnit;
 import com.apnafarmers.entity.WeightUnit;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -26,6 +26,6 @@ public class AppConfig {
 
 	List<BuyerType> buyerType;
 	
-	List<CropType> categories;
+	List<CropCategory> categories;
 
 }

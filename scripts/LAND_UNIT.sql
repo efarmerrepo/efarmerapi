@@ -1,0 +1,3 @@
+INSERT INTO LAND_UNIT(id,name) VALUES (1,'Acre');
+INSERT INTO LAND_UNIT(id,name) VALUES (2,'Hectare');
+INSERT INTO LAND_UNIT(id,name) VALUES (3,'Bigha');

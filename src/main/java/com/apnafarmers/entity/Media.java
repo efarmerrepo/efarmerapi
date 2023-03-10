@@ -12,10 +12,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -42,6 +44,10 @@ public class Media {
 //	@JoinColumn(name = "cropMedia", referencedColumnName = "id", nullable = false)
 //	@JsonIgnore
 //	private Crop crop;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
+	private Crop crop;
 
 	@Override
 	public boolean equals(Object o) {

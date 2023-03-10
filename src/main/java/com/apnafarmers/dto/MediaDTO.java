@@ -15,7 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Builder
-public class MediaDto {
+public class MediaDTO {
 	
 	private String type;
 

@@ -8,9 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 @Data
@@ -19,29 +17,31 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(Include.NON_EMPTY)
-public class CropDto {
+public class CropResponse {
 
 	private Long id;
 
 	private String firstName;
-	
+
 	private String lastName;
-	
-	private Long cropTypeId;
+
+	private Long cropCategoryId;
+
+	private String cropCategory;
+
+	private Long cropTypeid;
 
 	private String cropType;
 
 	private String cropName;
-	
-	private String name;
 
 	private Double rate;
 
-	private Long quantity;
+	private Double quantity;
 
 	private String quantityUnit;
 
-	private String land;
+	private Long land;
 
 	private String landUnit;
 
@@ -51,6 +51,6 @@ public class CropDto {
 
 	private String pinCode;
 
-	private List<MediaDto> media;
+	private List<MediaDTO> media;
 
 }

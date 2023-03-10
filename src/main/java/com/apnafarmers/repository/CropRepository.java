@@ -17,8 +17,8 @@ public interface CropRepository extends JpaRepository<Crop, Long> {
 
 	Crop findByNameIgnoreCase(String name);
 	
-	List<Crop> findByDistrict(String districtId);
-	
-	List<Crop> findByPinCode(String pincode);
+//	List<Crop> findByDistrict(String districtId);
+//	
+//	List<Crop> findByPinCode(String pincode);
 
 }
