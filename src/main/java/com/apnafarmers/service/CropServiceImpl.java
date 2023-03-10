@@ -34,6 +34,7 @@ import com.apnafarmers.repository.CropTypeRepository;
 import com.apnafarmers.repository.DistrictRepository;
 import com.apnafarmers.repository.FarmerRepository;
 import com.apnafarmers.repository.LandUnitRepository;
+import com.apnafarmers.repository.LocationRepository;
 import com.apnafarmers.repository.RateUnitRepository;
 import com.apnafarmers.repository.StateRepository;
 import com.apnafarmers.repository.TehsilRepository;
@@ -57,6 +58,9 @@ public class CropServiceImpl implements CropService {
 
 	@Autowired
 	StateRepository stateRepository;
+
+	@Autowired
+	LocationRepository locationRepository;
 
 	@Autowired
 	DistrictRepository districtRepository;
@@ -133,14 +137,14 @@ public class CropServiceImpl implements CropService {
 		List<Crop> crops = null;
 
 		if (StringUtils.isNotEmpty(stateId)) {
-			String state = locationService.findStateById(Long.valueOf(stateId));
+
+			crops = cropRepository.findByStateId(Long.valueOf(stateId));
 
 		} else if (StringUtils.isNotEmpty(districtId)) {
 
 		} else if (StringUtils.isNotEmpty(cityId)) {
 
 		} else if (StringUtils.isNotEmpty(cropCategory)) {
-
 			Optional<CropCategory> findById = cropCategoryRepository.findById(Long.valueOf(cropCategory));
 			CropCategory cropTypeFromDb = findById.orElseThrow(() -> new DataNotFoundException());
 			Set<Crop> crops2 = cropTypeFromDb.getCrops();
@@ -160,10 +164,14 @@ public class CropServiceImpl implements CropService {
 			crops = new ArrayList<>(crops2);
 
 		} else if (StringUtils.isNotEmpty(pinCode)) {
-//			crops = cropRepository.findByPinCode(pinCode);
-		} else if (StringUtils.isNotEmpty(avilabilityFromDate)) {
 
-		} else if (StringUtils.isNotEmpty(avilabilityToDate)) {
+			List<Location> findLocationByPinCode = locationRepository.findLocationByPinCode(Long.valueOf(pinCode));
+
+			List<Long> locationList = new ArrayList<>();
+			for (Location location : findLocationByPinCode) {
+				locationList.add(location.getId());
+			}
+//			crops = cropRepository.findCropByLocationId(locationList);
 
 		} else if (StringUtils.isNotEmpty(avilabilityFromDate) && StringUtils.isNotEmpty(avilabilityToDate)) {
 

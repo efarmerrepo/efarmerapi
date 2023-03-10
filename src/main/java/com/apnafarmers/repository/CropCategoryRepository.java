@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.apnafarmers.entity.CropCategory;
 
 @Repository
-public interface CropCategoryRepository extends JpaRepository<CropCategory, Long>{
+public interface CropCategoryRepository extends JpaRepository<CropCategory, Long> {
 
 	Optional<CropCategory> findByName(String name);
 
