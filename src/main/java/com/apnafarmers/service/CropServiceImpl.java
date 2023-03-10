@@ -209,6 +209,7 @@ public class CropServiceImpl implements CropService {
 		crop.setCropCategory(cropCategoryRepository.findById(request.getCropCategoryId()).orElse(null));
 		crop.setName(request.getCropName());
 		crop.setLand(request.getLand());
+
 		crop.setLandUnit(landUnitRepository.findById(request.getLandUnitId()).orElse(null));
 		crop.setWeight(request.getWeight());
 		crop.setWeightUnit(weightUnitRepository.findById(request.getWeightUnitId()).orElse(null));
@@ -242,10 +243,9 @@ public class CropServiceImpl implements CropService {
 			location.setState(stateRepository.findById(request.getStateId()).orElse(null));
 			location.setDistrict(districtRepository.findById(request.getDistrictId()).orElse(null));
 			location.setTehsil(tehsilRepository.findById(request.getTehsilId()).orElse(null));
-			location.setCity(cityRepository.findById(request.getCityid()).orElse(null));
+			location.setCity(cityRepository.findById(request.getCityId()).orElse(null));
 			location.setPinCode(request.getPinCode());
 		}
-
 		crop.setLocation(location);
 
 		List<MediaDTO> mediaDtoList = request.getMedia();

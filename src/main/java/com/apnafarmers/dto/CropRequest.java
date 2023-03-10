@@ -43,7 +43,7 @@ public class CropRequest {
 
 	private Long tehsilId;
 
-	private Long cityid;
+	private Long cityId;
 
 	private String pinCode;
 
