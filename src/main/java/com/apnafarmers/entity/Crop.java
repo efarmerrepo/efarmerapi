@@ -48,9 +48,10 @@ public class Crop {
 
 	private String quantityUnit;
 
-	private long land;
+	private Long land;
 
-	private boolean addressSameAsProfile;
+	
+	private Boolean addressSameAsProfile=false;
 
 	private String description;
 

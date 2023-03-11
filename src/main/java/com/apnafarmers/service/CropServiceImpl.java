@@ -141,8 +141,11 @@ public class CropServiceImpl implements CropService {
 			crops = cropRepository.findByStateId(Long.valueOf(stateId));
 
 		} else if (StringUtils.isNotEmpty(districtId)) {
+			crops = cropRepository.findByDistrict(Long.valueOf(districtId));
 
 		} else if (StringUtils.isNotEmpty(cityId)) {
+
+			crops = cropRepository.findByCity(Long.valueOf(cityId));
 
 		} else if (StringUtils.isNotEmpty(cropCategory)) {
 			Optional<CropCategory> findById = cropCategoryRepository.findById(Long.valueOf(cropCategory));
@@ -174,7 +177,8 @@ public class CropServiceImpl implements CropService {
 //			crops = cropRepository.findCropByLocationId(locationList);
 
 		} else if (StringUtils.isNotEmpty(avilabilityFromDate) && StringUtils.isNotEmpty(avilabilityToDate)) {
-
+			//TODO : Will add this later not needed now 
+			
 		} else if (StringUtils.isNotEmpty(limit) && StringUtils.isNotEmpty(offset)) {
 			Pageable pageLimit = PageRequest.of(0, Integer.valueOf(limit), Sort.by(Sort.Direction.DESC, "name"));
 			Page<Crop> findAll = cropRepository.findAll(pageLimit);
@@ -197,7 +201,7 @@ public class CropServiceImpl implements CropService {
 	@Override
 	public Crop updateCrop(CropRequest request) {
 
-		return null;
+		return cropRepository.saveAndFlush(request);
 	}
 
 	@Override

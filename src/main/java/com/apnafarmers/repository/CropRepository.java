@@ -25,7 +25,11 @@ public interface CropRepository extends JpaRepository<Crop, Long> {
 	@Query("SELECT c FROM Crop c where c.location.state.id in :stateId")
 	List<Crop> findByStateId(@Param("stateId") Long stateId);
 
-//	List<Crop> findByDistrict(String districtId);
+	@Query("SELECT c FROM Crop c where c.location.district.id in :districtId")
+	List<Crop> findByDistrict(@Param("districtId") Long districtId);
+	
+	@Query("SELECT c FROM Crop c where c.location.city.id in :cityId")
+	List<Crop> findByCity(@Param("cityId") Long cityId);
 //	
 //	List<Crop> findByPinCode(String pincode);
 
