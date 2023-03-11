@@ -13,4 +13,6 @@ public interface FarmerService {
 
 	public FarmerResponse findById(long id);
 
+	public Farmer updateFarmer(FarmerRequest request);
+
 }

@@ -15,10 +15,12 @@ import lombok.ToString;
 @JsonInclude(Include.NON_NULL)
 public class FarmerRequest {
 
-	private long farmerId;
+	private Long farmerId;
 	private String profileImage;
+
 	private String firstName;
 	private String lastName;
+
 	private String mobileNumber;
 	private String whatsappNumber;
 	private String email;
@@ -28,10 +30,15 @@ public class FarmerRequest {
 	private String latitude;
 	private String longitude;
 	private String village;
-	private long stateId;
-	private long districtId;
-	private long tehsilId;
-	private long cityId;
+
+	private Long stateId;
+
+	private Long districtId;
+
+	private Long tehsilId;
+
+	private Long cityId;
+
 	private String pinCode;
 
 	private String land;

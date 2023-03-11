@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +18,7 @@ import com.apnafarmers.dto.GenericResponse;
 import com.apnafarmers.entity.Farmer;
 import com.apnafarmers.service.FarmerService;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -35,7 +37,7 @@ public class FarmerController {
 		return new ResponseEntity<>(androidAppConfig, HttpStatus.OK);
 	}
 
-	@GetMapping("/details")
+	@GetMapping("/profile")
 	public ResponseEntity<FarmerResponse> getFarmerById(
 			@RequestParam(value = "farmerId", required = false) long farmerId) {
 
@@ -43,10 +45,19 @@ public class FarmerController {
 		return new ResponseEntity<>(farmerResponse, HttpStatus.OK);
 	}
 
-	@PostMapping("/details")
+	@PostMapping("/profile")
 	public ResponseEntity<GenericResponse> addFarmer(@RequestBody FarmerRequest request) {
 		log.info("{}", request);
 		Farmer save = farmerService.saveFarmer(request);
+		return new ResponseEntity<>(
+				GenericResponse.builder().message("Farmer added successfully").farmerId(save.getId()).build(),
+				HttpStatus.CREATED);
+	}
+
+	@PutMapping("/profile")
+	public ResponseEntity<GenericResponse> updateFarmer(@RequestBody FarmerRequest request) {
+		log.info("{}", request);
+		Farmer save = farmerService.updateFarmer(request);
 		return new ResponseEntity<>(
 				GenericResponse.builder().message("Farmer added successfully").farmerId(save.getId()).build(),
 				HttpStatus.CREATED);

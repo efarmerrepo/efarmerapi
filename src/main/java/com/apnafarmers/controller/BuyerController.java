@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,5 +56,17 @@ public class BuyerController {
 				GenericResponse.builder().message("Success").buyers(buyerService.getBuyer(querryParam)).build(),
 				HttpStatus.CREATED);
 	}
+	
+	@PutMapping("/profile")
+	public ResponseEntity<GenericResponse> updateBuyer(@RequestBody BuyerRequest request) {
+		log.info("{}", request);
+
+		Buyer saveBuyer = buyerService.updateBuyer(request);
+
+		return new ResponseEntity<>(
+				GenericResponse.builder().message("Buyer added successfully").buyerId(saveBuyer.getId()).build(),
+				HttpStatus.CREATED);
+	}
+
 
 }
