@@ -274,14 +274,6 @@ public class BuyerServiceImpl implements BuyerService {
 		}
 
 		buyer.setLocation(dbLocation);
-		
-		Set<Crop> cropFromDB = buyer.getCrops();{
-			
-			
-			
-			
-			
-		}
 
 		Buyer save = buyerRepository.save(buyer);
 

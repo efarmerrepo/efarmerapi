@@ -1,6 +1,8 @@
 package com.apnafarmers.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,14 +12,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.apnafarmers.dto.CartRequest;
+import com.apnafarmers.dto.CropResponse;
 import com.apnafarmers.dto.GenericResponse;
-import com.apnafarmers.entity.Crop;
 import com.apnafarmers.service.CartService;
+import com.apnafarmers.utils.ApnaFarmersConstants;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,11 +41,14 @@ public class CartController {
 	}
 
 	@GetMapping("/cart")
-	public ResponseEntity<List<Crop>> getCartCropForUser(@RequestParam(value = "userId", required = true) Long userId) {
+	public ResponseEntity<GenericResponse> getCartCropForUser(
+			@RequestParam(value = "userId", required = true) Long userId) {
 
-		log.info("User Id {}", userId );
-		List<Crop> cartCropForUser = cartService.getCartCropForUser(userId);
-		return new ResponseEntity<>(cartCropForUser, HttpStatus.OK);
+		log.info("User Id {}", userId);
+		List<CropResponse> cropResponseList = cartService.getCartCropForUser(userId);
+
+		return new ResponseEntity<>(GenericResponse.builder().crops(cropResponseList).status("Success").build(),
+				HttpStatus.OK);
 
 	}
 
@@ -60,14 +65,15 @@ public class CartController {
 	@DeleteMapping("/cart")
 	public ResponseEntity<GenericResponse> deleteUserFromCart(
 			@RequestParam(value = "userId", required = false) Long userId,
-			@RequestParam(value = "cropId", required = false) Long cropId) {
+			@RequestParam(value = "cropId", required = false) Long cropId,
+			@RequestParam(value = "cartId", required = false) Long cartId) {
 
-		if (userId != null) {
-			cartService.deleteUserFromCart(userId);
-		} else if (cropId != null) {
-			cartService.deleteCropFromCart(cropId);
-		}
+		Map<String, Long> querryParam = new HashMap<>();
+		querryParam.put(ApnaFarmersConstants.USER_ID, userId);
+		querryParam.put(ApnaFarmersConstants.CROP_ID, cropId);
+		querryParam.put(ApnaFarmersConstants.CART_ID, cartId);
 
+		cartService.deleteCart(querryParam);
 		return new ResponseEntity<>(
 				GenericResponse.builder().message("Cart Deleted successfully").status("Success").build(),
 				HttpStatus.OK);

@@ -19,6 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.apnafarmers.dto.CropRequest;
+import com.apnafarmers.dto.CropResponse;
 import com.apnafarmers.dto.MediaDTO;
 import com.apnafarmers.entity.Crop;
 import com.apnafarmers.entity.CropCategory;
@@ -119,7 +120,7 @@ public class CropServiceImpl implements CropService {
 	}
 
 	@Override
-	public List<Crop> getCropByParemeters(Map<String, String> querryParam) {
+	public List<CropResponse> getCropByParemeters(Map<String, String> querryParam) {
 
 		String stateId = querryParam.get(ApnaFarmersConstants.STATE_ID);
 		String districtId = querryParam.get(ApnaFarmersConstants.DISTRICT_ID);
@@ -183,7 +184,76 @@ public class CropServiceImpl implements CropService {
 			crops = cropRepository.findAll();
 		}
 
-		return crops;
+		
+		List<CropResponse> mapCroptoCropRequest = mapCroptoCropRequest(crops);
+		
+		return mapCroptoCropRequest;
+	}
+
+	private List<CropResponse> mapCroptoCropRequest(List<Crop> crops) {
+		
+		List<CropResponse> cropResponseList = new ArrayList<>();
+
+
+		for (Crop crop : crops) {
+			CropResponse cropResponse = new CropResponse();
+			cropResponse.setId(crop.getId());
+
+			Farmer farmer = crop.getFarmer();
+			if (farmer != null) {
+				cropResponse.setFirstName(farmer.getFirstName());
+				cropResponse.setLastName(farmer.getLastName());
+			}
+
+			if (crop.getCropType() != null) {
+				cropResponse.setCropTypeid(crop.getCropType().getId());
+				cropResponse.setCropType(crop.getCropType().getName());
+			}
+			
+			if(crop.getCropCategory() != null) {
+				cropResponse.setCropCategoryId(crop.getCropCategory().getId());
+				cropResponse.setCropCategory(crop.getCropCategory().getName());
+			}
+
+			cropResponse.setCropName(crop.getName());
+			cropResponse.setRate(crop.getRate());
+			cropResponse.setQuantity(crop.getWeight());
+			if (crop.getWeightUnit() != null) {
+				cropResponse.setQuantityUnit(crop.getWeightUnit().getName());
+			}
+			cropResponse.setLand(crop.getLand());
+
+			if (crop.getLandUnit() != null) {
+				cropResponse.setLandUnit(crop.getLandUnit().getName());
+			}
+
+			log.info("crop.getLocation {}", crop.getLocation());
+			
+			if (crop.getLocation().getCity() != null) {
+				cropResponse.setCity(crop.getLocation().getCity().getName());
+			}
+
+			if (crop.getLocation().getDistrict() != null) {
+				cropResponse.setDistrict(crop.getLocation().getDistrict().getName());
+			}
+
+			cropResponse.setPinCode(crop.getLocation().getPinCode());
+
+			List<MediaDTO> mediaResponse = new ArrayList<>();
+			Set<Media> medList = crop.getMedias();
+			if (medList != null) {
+				for (Media media : medList) {
+					MediaDTO mediaDto = new MediaDTO();
+					mediaDto.setType(media.getUrl());
+					mediaDto.setUrl(media.getType());
+					mediaResponse.add(mediaDto);
+				}
+				cropResponse.setMedia(mediaResponse);
+				cropResponseList.add(cropResponse);
+			}
+		}
+		
+		return cropResponseList;
 	}
 
 	@Override

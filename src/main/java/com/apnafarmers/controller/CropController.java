@@ -1,12 +1,9 @@
 package com.apnafarmers.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.apnafarmers.dto.CropRequest;
 import com.apnafarmers.dto.CropResponse;
 import com.apnafarmers.dto.GenericResponse;
-import com.apnafarmers.dto.MediaDTO;
 import com.apnafarmers.entity.Crop;
-import com.apnafarmers.entity.Farmer;
-import com.apnafarmers.entity.Media;
 import com.apnafarmers.service.CropService;
 import com.apnafarmers.utils.ApnaFarmersConstants;
 
@@ -88,79 +82,9 @@ public class CropController {
 		querryParam.put(ApnaFarmersConstants.LIMIT, limit);
 		querryParam.put(ApnaFarmersConstants.OFFSET, offset);
 
-		List<CropResponse> cropResponseList = new ArrayList<>();
-		List<Crop> crops = cropService.getCropByParemeters(querryParam);
+		List<CropResponse> cropByParemeters = cropService.getCropByParemeters(querryParam);
 
-		if (StringUtils.isNotEmpty(cropCategory)) {
-			for (Crop crop : crops) {
-
-				CropResponse cropDto = new CropResponse();
-				cropDto.setId(crop.getId());
-				cropDto.setCropName(crop.getName());
-				cropResponseList.add(cropDto);
-			}
-			return new ResponseEntity<>(GenericResponse.builder().crops(cropResponseList).build(), HttpStatus.OK);
-		}
-
-		for (Crop crop : crops) {
-			CropResponse cropResponse = new CropResponse();
-			cropResponse.setId(crop.getId());
-
-			Farmer farmer = crop.getFarmer();
-			if (farmer != null) {
-				cropResponse.setFirstName(farmer.getFirstName());
-				cropResponse.setLastName(farmer.getLastName());
-			}
-
-			if (crop.getCropType() != null) {
-				cropResponse.setCropTypeid(crop.getCropType().getId());
-				cropResponse.setCropType(crop.getCropType().getName());
-			}
-			
-			if(crop.getCropCategory() != null) {
-				cropResponse.setCropCategoryId(crop.getCropCategory().getId());
-				cropResponse.setCropCategory(crop.getCropCategory().getName());
-			}
-
-			cropResponse.setCropName(crop.getName());
-			cropResponse.setRate(crop.getRate());
-			cropResponse.setQuantity(crop.getWeight());
-			if (crop.getWeightUnit() != null) {
-				cropResponse.setQuantityUnit(crop.getWeightUnit().getName());
-			}
-			cropResponse.setLand(crop.getLand());
-
-			if (crop.getLandUnit() != null) {
-				cropResponse.setLandUnit(crop.getLandUnit().getName());
-			}
-
-			log.info("crop.getLocation {}", crop.getLocation());
-			
-			if (crop.getLocation().getCity() != null) {
-				cropResponse.setCity(crop.getLocation().getCity().getName());
-			}
-
-			if (crop.getLocation().getDistrict() != null) {
-				cropResponse.setDistrict(crop.getLocation().getDistrict().getName());
-			}
-
-			cropResponse.setPinCode(crop.getLocation().getPinCode());
-
-			List<MediaDTO> mediaResponse = new ArrayList<>();
-			Set<Media> medList = crop.getMedias();
-			if (medList != null) {
-				for (Media media : medList) {
-					MediaDTO mediaDto = new MediaDTO();
-					mediaDto.setType(media.getUrl());
-					mediaDto.setUrl(media.getType());
-					mediaResponse.add(mediaDto);
-				}
-				cropResponse.setMedia(mediaResponse);
-				cropResponseList.add(cropResponse);
-			}
-		}
-
-		return new ResponseEntity<>(GenericResponse.builder().crops(cropResponseList).build(), HttpStatus.OK);
+		return new ResponseEntity<>(GenericResponse.builder().crops(cropByParemeters).build(), HttpStatus.OK);
 
 	}
 

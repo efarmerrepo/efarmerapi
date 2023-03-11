@@ -1,10 +1,11 @@
 package com.apnafarmers.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.apnafarmers.dto.CartRequest;
+import com.apnafarmers.dto.CropResponse;
 import com.apnafarmers.entity.Cart;
-import com.apnafarmers.entity.Crop;
 
 public interface CartService {
 
@@ -12,11 +13,9 @@ public interface CartService {
 
 	public Cart addCropInCart(CartRequest request);
 
-	public List<Crop> getCartCropForUser(long userId);
+	public List<CropResponse> getCartCropForUser(long userId);
 
 	public Cart updateCropInCart(CartRequest request);
 
-	public void deleteUserFromCart(long userId);
-
-	public void deleteCropFromCart(long cropId);
+	public void deleteCart(Map<String, Long> querryParam);
 }
