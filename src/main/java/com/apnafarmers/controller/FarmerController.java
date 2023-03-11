@@ -18,7 +18,6 @@ import com.apnafarmers.dto.GenericResponse;
 import com.apnafarmers.entity.Farmer;
 import com.apnafarmers.service.FarmerService;
 
-import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
