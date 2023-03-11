@@ -142,8 +142,10 @@ public class CropServiceImpl implements CropService {
 			crops = cropRepository.findByStateId(Long.valueOf(stateId));
 
 		} else if (StringUtils.isNotEmpty(districtId)) {
+			crops = cropRepository.findByDistrictId(Long.valueOf(districtId));
 
 		} else if (StringUtils.isNotEmpty(cityId)) {
+			crops = cropRepository.findByCityId(Long.valueOf(cityId));
 
 		} else if (StringUtils.isNotEmpty(cropCategory)) {
 			Optional<CropCategory> findById = cropCategoryRepository.findById(Long.valueOf(cropCategory));
@@ -163,37 +165,45 @@ public class CropServiceImpl implements CropService {
 			CropCategory orElseThrow = findByName.orElseThrow();
 			Set<Crop> crops2 = orElseThrow.getCrops();
 			crops = new ArrayList<>(crops2);
-
 		} else if (StringUtils.isNotEmpty(pinCode)) {
+			crops = cropRepository.findByPinCode(Long.valueOf(pinCode));
+		} else if (StringUtils.isNotEmpty(avilabilityFromDate)) {
+			
+			DateTimeFormatter df = new DateTimeFormatterBuilder()
+					.appendPattern("dd-MM-yyyy").toFormatter(Locale.ENGLISH);
+			
+			LocalDate date = LocalDate.parse(avilabilityFromDate, df);
+			crops = cropRepository.findByAvilabilityFromDate(date);
 
-			List<Location> findLocationByPinCode = locationRepository.findLocationByPinCode(Long.valueOf(pinCode));
+		}else if (StringUtils.isNotEmpty(avilabilityToDate)) {
+			
+			DateTimeFormatter df = new DateTimeFormatterBuilder()
+					.appendPattern("dd-MM-yyyy").toFormatter(Locale.ENGLISH);
+			
+			LocalDate date = LocalDate.parse(avilabilityToDate, df);
+			crops = cropRepository.findByAvilabilityToDate(date);
 
-			List<Long> locationList = new ArrayList<>();
-			for (Location location : findLocationByPinCode) {
-				locationList.add(location.getId());
-			}
-//			crops = cropRepository.findCropByLocationId(locationList);
-
-		} else if (StringUtils.isNotEmpty(avilabilityFromDate) && StringUtils.isNotEmpty(avilabilityToDate)) {
-
-		} else if (StringUtils.isNotEmpty(limit) && StringUtils.isNotEmpty(offset)) {
-			Pageable pageLimit = PageRequest.of(0, Integer.valueOf(limit), Sort.by(Sort.Direction.DESC, "name"));
+		} 
+		else if (StringUtils.isNotEmpty(limit) && StringUtils.isNotEmpty(offset)) {
+			Integer o = Integer.valueOf(offset);
+			Integer l = Integer.valueOf(limit);
+			Pageable pageLimit = PageRequest.of(o * l, o * l - 1, Sort.by(Sort.Direction.DESC, "name"));
 			Page<Crop> findAll = cropRepository.findAll(pageLimit);
 			crops = findAll.getContent();
 		} else {
-			crops = cropRepository.findAll();
+			Pageable pageLimit = PageRequest.of(0, 20, Sort.by(Sort.Direction.DESC, "name"));
+			Page<Crop> findAll = cropRepository.findAll(pageLimit);
+			crops = findAll.getContent();
 		}
 
-		
 		List<CropResponse> mapCroptoCropRequest = mapCroptoCropRequest(crops);
-		
+
 		return mapCroptoCropRequest;
 	}
 
 	private List<CropResponse> mapCroptoCropRequest(List<Crop> crops) {
-		
-		List<CropResponse> cropResponseList = new ArrayList<>();
 
+		List<CropResponse> cropResponseList = new ArrayList<>();
 
 		for (Crop crop : crops) {
 			CropResponse cropResponse = new CropResponse();
@@ -209,8 +219,8 @@ public class CropServiceImpl implements CropService {
 				cropResponse.setCropTypeid(crop.getCropType().getId());
 				cropResponse.setCropType(crop.getCropType().getName());
 			}
-			
-			if(crop.getCropCategory() != null) {
+
+			if (crop.getCropCategory() != null) {
 				cropResponse.setCropCategoryId(crop.getCropCategory().getId());
 				cropResponse.setCropCategory(crop.getCropCategory().getName());
 			}
@@ -228,7 +238,7 @@ public class CropServiceImpl implements CropService {
 			}
 
 			log.info("crop.getLocation {}", crop.getLocation());
-			
+
 			if (crop.getLocation().getCity() != null) {
 				cropResponse.setCity(crop.getLocation().getCity().getName());
 			}
@@ -252,7 +262,7 @@ public class CropServiceImpl implements CropService {
 				cropResponseList.add(cropResponse);
 			}
 		}
-		
+
 		return cropResponseList;
 	}
 
