@@ -3,7 +3,6 @@ package com.apnafarmers.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
@@ -160,13 +159,9 @@ public class BuyerServiceImpl implements BuyerService {
 		location.setAddress1(request.getAddress1());
 		location.setAddress2(request.getAddress2());
 		location.setState(stateRepository.findById(request.getStateId()).orElse(null));
-
 		location.setDistrict(districtRepository.findById(request.getDistrictId()).orElse(null));
-
 		location.setTehsil(tehsilRepository.findById(request.getTehsilId()).orElse(null));
-
 		location.setCity(cityRepository.findById(request.getCityId()).orElse(null));
-
 		location.setPinCode(request.getPinCode());
 		buyer.setLocation(location);
 
@@ -195,6 +190,93 @@ public class BuyerServiceImpl implements BuyerService {
 		}
 
 		Buyer save = buyerRepository.save(buyer);
+		return save;
+	}
+
+	@Override
+	public Buyer updateBuyer(BuyerRequest request) {
+
+		Buyer buyer;
+		if (request.getId() != null) {
+			buyer = buyerRepository.findById(request.getId()).orElseThrow(
+					() -> new DataNotFoundException("Buyer is not Found with given Id " + request.getId()));
+		} else {
+			throw new DataNotFoundException("Id is mandatory for update ");
+		}
+
+		log.info("Updating the Buyer {}", request);
+		log.info("Buyer from DB  {}", buyer);
+		if (StringUtils.isNotEmpty(request.getProfileImage())) {
+			buyer.setProfileImage(request.getProfileImage());
+		}
+
+		if (StringUtils.isNotEmpty(request.getFirstName())) {
+			buyer.setFirstName(request.getFirstName());
+		}
+		if (StringUtils.isNotEmpty(request.getLastName())) {
+			buyer.setLastName(request.getLastName());
+		}
+		if (StringUtils.isNotEmpty(request.getMobileNumber())) {
+			buyer.setMobileNumber(request.getMobileNumber());
+		}
+		if (StringUtils.isNotEmpty(request.getWhatsappNumber())) {
+			buyer.setWhatsappNumber(request.getWhatsappNumber());
+		}
+
+		if (StringUtils.isNotEmpty(request.getEmail())) {
+			buyer.setEmail(request.getEmail());
+		}
+
+		if (StringUtils.isNotEmpty(request.getCompanyName())) {
+			buyer.setCompanyName(request.getCompanyName());
+		}
+
+		if (request.getBuyerTypeId() != null) {
+			buyer.setBuyerType(buyerTypeRepository.findById(request.getBuyerTypeId()).orElse(null));
+		}
+
+		Location dbLocation = buyer.getLocation();
+
+		if (StringUtils.isNoneEmpty(request.getLatitude())) {
+			dbLocation.setLatitude(request.getLatitude());
+		}
+
+		if (StringUtils.isNoneEmpty(request.getLongitude())) {
+			dbLocation.setLongitude(request.getLongitude());
+		}
+
+		if (StringUtils.isNoneEmpty(request.getAddress1())) {
+			dbLocation.setAddress1(request.getAddress1());
+		}
+
+		if (StringUtils.isNoneEmpty(request.getAddress2())) {
+			dbLocation.setAddress2(request.getAddress2());
+		}
+
+		if (request.getStateId() != null) {
+			dbLocation.setState(stateRepository.findById(request.getStateId()).orElse(null));
+		}
+
+		if (request.getDistrictId() != null) {
+			dbLocation.setDistrict(districtRepository.findById(request.getDistrictId()).orElse(null));
+		}
+
+		if (request.getTehsilId() != null) {
+			dbLocation.setTehsil(tehsilRepository.findById(request.getTehsilId()).orElse(null));
+		}
+
+		if (request.getCityId() != null) {
+			dbLocation.setCity(cityRepository.findById(request.getCityId()).orElse(null));
+		}
+
+		if (request.getPinCode() != null) {
+			dbLocation.setPinCode(request.getPinCode());
+		}
+
+		buyer.setLocation(dbLocation);
+
+		Buyer save = buyerRepository.save(buyer);
+
 		return save;
 	}
 

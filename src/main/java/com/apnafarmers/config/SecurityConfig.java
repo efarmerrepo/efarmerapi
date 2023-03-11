@@ -43,6 +43,7 @@ public class SecurityConfig {
 						"/location/**", 
 						"/farmers/**",
 						"/buyers/**",
+						"/cart/**",
 						"/v2/api-docs/**",
 						"/v3/api-docs/**",
                         "/configuration/ui",

@@ -13,4 +13,6 @@ public interface BuyerService {
 
 	public List<BuyerResponse> getBuyer(Map<String, String> querryParam);
 
+	public Buyer updateBuyer(BuyerRequest request);
+
 }

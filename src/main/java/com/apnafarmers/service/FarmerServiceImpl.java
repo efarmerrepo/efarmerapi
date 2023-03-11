@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ import com.apnafarmers.entity.LandUnit;
 import com.apnafarmers.entity.Location;
 import com.apnafarmers.entity.Media;
 import com.apnafarmers.entity.WeightUnit;
+import com.apnafarmers.exception.DataNotFoundException;
 import com.apnafarmers.exception.ResourceNotFoundException;
 import com.apnafarmers.repository.AndroidAppConfigRepository;
 import com.apnafarmers.repository.BuyerTypeRepository;
@@ -139,7 +141,7 @@ public class FarmerServiceImpl implements FarmerService {
 		farmer.setLocation(location);
 
 		farmer.setLand(request.getLand());
-		farmer.setLand(request.getLandUnit());
+		farmer.setLandUnit(request.getLandUnit());
 		
 		List<MediaDTO> mediaDtoList = request.getMedia();
 		if (mediaDtoList != null) {
@@ -226,6 +228,95 @@ public class FarmerServiceImpl implements FarmerService {
 		}
 				
 		return farmerResponse;
+	}
+
+	@Override
+	public Farmer updateFarmer(FarmerRequest request) {
+		
+		Farmer farmer;
+		if (request.getFarmerId() != null) {
+			farmer = farmerRepository.findById(request.getFarmerId()).orElseThrow(
+					() -> new DataNotFoundException("Farmer is not Found with given Id " + request.getFarmerId()));
+		} else {
+			throw new DataNotFoundException("FarmerId is mandatory for update ");
+		}
+
+		if (StringUtils.isNotEmpty(request.getProfileImage())) {
+			farmer.setProfileImage(request.getProfileImage());
+		}
+		
+		if (StringUtils.isNotEmpty(request.getFirstName())) {
+			farmer.setFirstName(request.getFirstName());
+		}
+		if (StringUtils.isNotEmpty(request.getLastName())) {
+			farmer.setLastName(request.getLastName());
+		}
+		if (StringUtils.isNotEmpty(request.getMobileNumber())) {
+			farmer.setMobileNumber(request.getMobileNumber());
+		}
+		if (StringUtils.isNotEmpty(request.getWhatsappNumber())) {
+			farmer.setWhatsAppNumber(request.getWhatsappNumber());
+		}
+		if (StringUtils.isNotEmpty(request.getEmail())) {
+			farmer.setEmail(request.getEmail());
+		}
+		
+		Location location = farmer.getLocation();
+		if (StringUtils.isNotEmpty(request.getLatitude())) {
+			location.setLatitude(request.getLatitude());
+		}
+		
+		if (StringUtils.isNotEmpty(request.getLongitude())) {
+			location.setLongitude(request.getLongitude());
+		}
+		
+		if (StringUtils.isNotEmpty(request.getAddress())) {
+			location.setAddress1(request.getAddress());
+		}
+		
+		if (StringUtils.isNotEmpty(request.getAddress2())) {
+			location.setAddress2(request.getAddress2());
+		}
+		
+		
+		if (request.getStateId() != null) {
+			location.setState(stateRepository.findById(request.getStateId()).orElse(null));
+		}
+		
+		if (request.getDistrictId() != null) {
+			location.setDistrict(districtRepository.findById(request.getDistrictId()).orElse(null));
+		}
+		
+		if (request.getTehsilId()!= null) {
+			location.setTehsil(tehsilRepository.findById(request.getTehsilId()).orElse(null));
+		}
+
+		if (request.getCityId()!= null) {
+			location.setCity(cityRepository.findById(request.getCityId()).orElse(null));
+		}
+
+		if (StringUtils.isNotEmpty(request.getPinCode())) {
+			location.setPinCode(request.getPinCode());
+		}
+		
+		farmer.setLocation(location);
+
+		if (StringUtils.isNotEmpty(request.getPinCode())) {
+			farmer.setLand(request.getLand());
+		}
+		
+		if (StringUtils.isNotEmpty(request.getLandUnit())) {
+			farmer.setLandUnit(request.getLandUnit());
+		}
+		
+
+		log.info("updating Farmer {} ", farmer);
+		
+		//TODO: Update media remaining
+		
+
+		Farmer save = farmerRepository.save(farmer);
+		return save;
 	}
 
 }

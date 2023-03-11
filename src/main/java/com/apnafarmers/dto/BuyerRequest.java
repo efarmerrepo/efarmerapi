@@ -17,6 +17,7 @@ import lombok.ToString;
 @JsonInclude(Include.NON_NULL)
 public class BuyerRequest {
 
+	private Long id;
 	private String firstName;
 	private String lastName;
 	private String profileImage;
