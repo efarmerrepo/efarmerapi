@@ -27,4 +27,6 @@ public interface CropService {
 
 	void deleteCropCategories(long cropId);
 
+	void deleteCropById(Long cropId);
+
 }

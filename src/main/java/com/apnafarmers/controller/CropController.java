@@ -89,7 +89,9 @@ public class CropController {
 	}
 
 	@DeleteMapping("/crops")
-	public ResponseEntity<GenericResponse> deleteCropById() {
+	public ResponseEntity<GenericResponse> deleteCropById(
+			@RequestParam(value = "cropId", required = false) Long cropId) {
+		cropService.deleteCropById(cropId);
 		return new ResponseEntity<>(GenericResponse.builder().status("Success").build(), HttpStatus.OK);
 	}
 }

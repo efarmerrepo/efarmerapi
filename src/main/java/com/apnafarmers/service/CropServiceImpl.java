@@ -168,23 +168,22 @@ public class CropServiceImpl implements CropService {
 		} else if (StringUtils.isNotEmpty(pinCode)) {
 			crops = cropRepository.findByPinCode(Long.valueOf(pinCode));
 		} else if (StringUtils.isNotEmpty(avilabilityFromDate)) {
-			
-			DateTimeFormatter df = new DateTimeFormatterBuilder()
-					.appendPattern("dd-MM-yyyy").toFormatter(Locale.ENGLISH);
-			
+
+			DateTimeFormatter df = new DateTimeFormatterBuilder().appendPattern("dd-MM-yyyy")
+					.toFormatter(Locale.ENGLISH);
+
 			LocalDate date = LocalDate.parse(avilabilityFromDate, df);
 			crops = cropRepository.findByAvilabilityFromDate(date);
 
-		}else if (StringUtils.isNotEmpty(avilabilityToDate)) {
-			
-			DateTimeFormatter df = new DateTimeFormatterBuilder()
-					.appendPattern("dd-MM-yyyy").toFormatter(Locale.ENGLISH);
-			
+		} else if (StringUtils.isNotEmpty(avilabilityToDate)) {
+
+			DateTimeFormatter df = new DateTimeFormatterBuilder().appendPattern("dd-MM-yyyy")
+					.toFormatter(Locale.ENGLISH);
+
 			LocalDate date = LocalDate.parse(avilabilityToDate, df);
 			crops = cropRepository.findByAvilabilityToDate(date);
 
-		} 
-		else if (StringUtils.isNotEmpty(limit) && StringUtils.isNotEmpty(offset)) {
+		} else if (StringUtils.isNotEmpty(limit) && StringUtils.isNotEmpty(offset)) {
 			Integer o = Integer.valueOf(offset);
 			Integer l = Integer.valueOf(limit);
 			Pageable pageLimit = PageRequest.of(o * l, o * l - 1, Sort.by(Sort.Direction.DESC, "name"));
@@ -277,7 +276,108 @@ public class CropServiceImpl implements CropService {
 	@Override
 	public Crop updateCrop(CropRequest request) {
 
-		return null;
+		Crop crop;
+		if (request.getCropId() != null) {
+			crop = cropRepository.findById(request.getFarmerId()).orElseThrow(
+					() -> new DataNotFoundException("Crop is not Found with given Id " + request.getCropId()));
+		} else {
+			throw new DataNotFoundException("CropId is mandatory for update ");
+		}
+
+		if (StringUtils.isNotEmpty(request.getCropName())) {
+			crop.setName(request.getCropName());
+		}
+
+		if (request.getFarmerId() != null) {
+			crop.setFarmer(farmerRepository.findById(request.getFarmerId()).orElse(null));
+		}
+
+		if (request.getCropQuality() != null) {
+			crop.setCropQuality(cropQualityRepository.findById(request.getCropQuality()).orElse(null));
+		}
+
+		if (request.getCropCategoryId() != null) {
+			crop.setCropCategory(cropCategoryRepository.findById(request.getCropCategoryId()).orElse(null));
+		}
+
+		if (request.getCropTypeId() != null) {
+			crop.setCropType(cropTypeRepository.findById(request.getCropTypeId()).orElse(null));
+		}
+
+		if (request.getLand() != null) {
+			crop.setLand(request.getLand());
+		}
+
+		if (request.getLandUnitId() != null) {
+			crop.setLandUnit(landUnitRepository.findById(request.getLandUnitId()).orElse(null));
+		}
+
+		if (request.getWeight() != null) {
+			crop.setWeight(request.getWeight());
+		}
+
+		if (request.getWeightUnitId() != null) {
+			crop.setWeightUnit(weightUnitRepository.findById(request.getWeightUnitId()).orElse(null));
+		}
+
+		if (request.getRate() != null) {
+			crop.setRate(request.getRate());
+		}
+
+		if (request.getRateUnitId() != null) {
+			crop.setRateUnit(rateUnitRepository.findById(request.getRateUnitId()).orElse(null));
+		}
+
+		Location location = crop.getLocation();
+		if (StringUtils.isNotEmpty(request.getAddress())) {
+			location.setAddress1(request.getAddress());
+		}
+
+		if (StringUtils.isNotEmpty(request.getAddress2())) {
+			location.setAddress2(request.getAddress2());
+		}
+
+		if (request.getStateId() != null) {
+			location.setState(stateRepository.findById(request.getStateId()).orElse(null));
+		}
+
+		if (request.getDistrictId() != null) {
+			location.setDistrict(districtRepository.findById(request.getDistrictId()).orElse(null));
+		}
+
+		if (request.getTehsilId() != null) {
+			location.setTehsil(tehsilRepository.findById(request.getTehsilId()).orElse(null));
+		}
+
+		if (request.getCityId() != null) {
+			location.setCity(cityRepository.findById(request.getCityId()).orElse(null));
+		}
+
+		if (StringUtils.isNotEmpty(request.getPinCode())) {
+			location.setPinCode(request.getPinCode());
+		}
+
+		crop.setLocation(location);
+
+		if (StringUtils.isNotEmpty(request.getDescription())) {
+			crop.setDescription(request.getDescription());
+		}
+
+		DateTimeFormatter df = new DateTimeFormatterBuilder()
+//				.parseCaseInsensitive()
+				.appendPattern("dd-MM-yyyy").toFormatter(Locale.ENGLISH);
+
+		if (StringUtils.isNotEmpty(request.getAvailabilityDate())) {
+			crop.setAvailabilityDate(LocalDate.parse((request.getAvailabilityDate()), df));
+		} else {
+			LocalDate currentDate = LocalDate.now();
+			crop.setCreatedDate(currentDate);
+		}
+
+		log.info("updating Crop {} ", crop);
+		Crop save = cropRepository.save(crop);
+
+		return save;
 	}
 
 	@Override
@@ -346,6 +446,11 @@ public class CropServiceImpl implements CropService {
 			}
 		}
 		crop.setDescription(request.getDescription());
+	}
+
+	@Override
+	public void deleteCropById(Long cropId) {
+		cropRepository.deleteById(cropId);
 	}
 
 }
